@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "ls"
+version = "0.1.0"
+description = ""
+authors = ["bilalimamoglu <xfyzal@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+jupyter = "^1.0.0"
+notebook = "^7.1.2"
+numpy = "^1.26.4"
+pandas = "^2.2.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
