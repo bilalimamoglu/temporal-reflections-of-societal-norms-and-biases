@@ -1,1 +1,1 @@
-# temporary-gender-bias-detection
+# temporal-reflections-of-societal-norms-and-biases
