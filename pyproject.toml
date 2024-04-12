@@ -11,6 +11,12 @@ jupyter = "^1.0.0"
 notebook = "^7.1.2"
 numpy = "^1.26.4"
 pandas = "^2.2.1"
+transformers = "^4.39.2"
+langtest = "^2.0.0"
+tqdm = "^4.66.2"
+accelerate = "^0.28.0"
+datasets = "^2.18.0"
+gdown = "^5.1.0"
 
 
 [build-system]
