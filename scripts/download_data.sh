@@ -69,7 +69,7 @@ download_data() {
 }
 
 # Execute downloads
-#download_data "case_law" CASE_LAW_URLS
+download_data "case_law" CASE_LAW_URLS
 download_data "ny_times" NY_TIMES_URLS
 
 echo "Data download complete." | tee -a "$LOG_FILE"
