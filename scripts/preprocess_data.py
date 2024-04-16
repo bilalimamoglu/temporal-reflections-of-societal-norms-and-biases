@@ -44,8 +44,8 @@ def preprocess_data(data_source, model_name, years_list, base_dir="data", reproc
 
 def main():
     parser = ArgumentParser()
-    parser.add_argument("--data_source", type=str, default="case_law", help="Source directory for raw data")
-    parser.add_argument("--model_name", type=str, default="bert-base-uncased", help="Model name for tokenizer")
+    parser.add_argument("--data_source", type=str, default="ny_times", help="Source directory for raw data")
+    parser.add_argument("--model_name", type=str, default="albert-base-v2", help="Model name for tokenizer")
     parser.add_argument("--years_list", type=int, nargs='+', default=[1900, 1910, 1920, 1930, 1940, 1950, 1960, 1970, 1980, 1990, 2000, 2010], help="List of years to process")
     parser.add_argument("--base_dir", type=str, default="data", help="Base directory for data processing")
     parser.add_argument("--reprocess", action='store_true', help="Flag to reprocess data even if already exists")

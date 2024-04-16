@@ -2,7 +2,7 @@ import os
 import logging
 import numpy as np
 import torch
-from datasets import load_dataset, Dataset, DatasetDict
+from datasets import Dataset
 from transformers import AutoTokenizer, AutoModelForMaskedLM, Trainer, TrainingArguments, DataCollatorForLanguageModeling, set_seed
 from transformers import logging as transformers_logging
 from argparse import ArgumentParser
@@ -37,8 +37,6 @@ class ModelTrainer:
         self.tokenizer = AutoTokenizer.from_pretrained(model_name)
 
     def set_random_seeds(self, seed=42):
-        if seed is None:
-            seed = self.seed
         logger.info(f"Setting random seed to {seed}")
         set_seed(seed)
         np.random.seed(seed)
@@ -48,7 +46,7 @@ class ModelTrainer:
     def load_datasets(self, years_list):
         datasets = {}
         for year in years_list:
-            processed_path = os.path.join("data", "processed", self.data_source, str(year))
+            processed_path = os.path.join("data", "processed", self.data_source, self.model_name, str(year))
             train_dataset_path = os.path.join(processed_path, "train_dataset")
             val_dataset_path = os.path.join(processed_path, "val_dataset")
             if os.path.exists(train_dataset_path) and os.path.exists(val_dataset_path):
@@ -63,7 +61,7 @@ class ModelTrainer:
     def train_models(self, datasets):
         for year, split_datasets in datasets.items():
             for run in range(self.num_runs):
-                self.set_random_seeds(self.seed + run)  # different seed for each run
+                self.set_random_seeds(self.seed + run)
                 year_output_dir = os.path.join(self.output_dir, self.data_source, self.model_name, str(year), f"run_{run+1}")
                 os.makedirs(year_output_dir, exist_ok=True)
                 logger.info(f"Training run {run+1} for year {year}")
@@ -102,8 +100,8 @@ class ModelTrainer:
 
 def main():
     parser = ArgumentParser()
-    parser.add_argument("--data_source", type=str, default="case_law", help="Source of the data to train on")
-    parser.add_argument("--model_name", type=str, default="bert-base-uncased", help="Pretrained model name")
+    parser.add_argument("--data_source", type=str, default="ny_times", help="Source of the data to train on")
+    parser.add_argument("--model_name", type=str, default="albert-base-v2", help="Pretrained model name")
     parser.add_argument("--output_dir", type=str, default="models", help="Directory to save trained models")
     parser.add_argument("--retrain", action='store_true', help="Flag to force retraining of models")
     parser.add_argument("--years_list", nargs='+', type=int, default=[1900, 1910, 1920, 1930, 1940, 1950, 1960, 1970, 1980, 1990, 2000, 2010], help="List of years to train models for")
