@@ -1,7 +1,7 @@
 import os
 import logging
 from argparse import ArgumentParser
-from datasets import load_dataset, DatasetDict
+from datasets import load_dataset
 from transformers import AutoTokenizer
 from tqdm import tqdm
 
@@ -11,7 +11,8 @@ logger = logging.getLogger(__name__)
 
 def preprocess_data(data_source, model_name, years_list, base_dir="data", reprocess=False, split_ratio=0.9, max_length=512):
     tokenizer = AutoTokenizer.from_pretrained(model_name)
-    processed_dir = os.path.join(base_dir, "processed", data_source)
+    # Include model_name in the processed directory path
+    processed_dir = os.path.join(base_dir, "processed", data_source, model_name)
 
     # Use tqdm for progress tracking over years list
     for year in tqdm(years_list, desc="Processing years", unit="year"):
