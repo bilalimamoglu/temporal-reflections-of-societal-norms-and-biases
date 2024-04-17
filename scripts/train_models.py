@@ -81,11 +81,11 @@ class ModelTrainer:
                     per_device_eval_batch_size=self.per_device_eval_batch_size,
                     warmup_steps=self.warmup_steps,
                     weight_decay=self.weight_decay,
-                    save_steps=1000,
+                    save_steps=2500,
                     learning_rate=self.learning_rate,
                     evaluation_strategy="steps",
                     logging_dir=os.path.join(year_output_dir, 'logs'),
-                    logging_steps=1000,
+                    logging_steps=2500,
                     load_best_model_at_end=True,
                 )
                 model = AutoModelForMaskedLM.from_pretrained(latest_checkpoint if latest_checkpoint else self.model_name)
