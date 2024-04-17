@@ -36,7 +36,9 @@ poetry run python scripts/train_models.py --data_source ny_times --model_name di
 
 poetry run python scripts/train_models.py --data_source case_law --model_name albert-base-v2 --years_list 1950 --max_steps 5000 --batch_size 8 --retrain
 
-streamlit run scripts/visualize_pipeline.py
+
+
+poetry run streamlit run scripts/visualize_pipeline.py
 
 
 
