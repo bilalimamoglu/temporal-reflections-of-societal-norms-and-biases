@@ -17,8 +17,8 @@ transformers_logging.set_verbosity_info()
 
 class ModelTrainer:
     def __init__(self, data_source, model_name, output_dir="models", retrain=False, split_ratio=0.9, max_length=512,
-                 mlm_probability=0.15, learning_rate=5e-5, num_train_epochs=3, per_device_train_batch_size=8,
-                 per_device_eval_batch_size=16, warmup_steps=500, weight_decay=0.01, num_runs=3, seed=42):
+                 mlm_probability=0.15, learning_rate=5e-5, max_steps=5000, per_device_train_batch_size=8,
+                 per_device_eval_batch_size=8, warmup_steps=500, weight_decay=0.01, num_runs=3, seed=42):
         self.data_source = data_source
         self.model_name = model_name
         self.output_dir = output_dir
@@ -27,7 +27,7 @@ class ModelTrainer:
         self.max_length = max_length
         self.mlm_probability = mlm_probability
         self.learning_rate = learning_rate
-        self.num_train_epochs = num_train_epochs
+        self.max_steps = max_steps
         self.per_device_train_batch_size = per_device_train_batch_size
         self.per_device_eval_batch_size = per_device_eval_batch_size
         self.warmup_steps = warmup_steps
@@ -66,10 +66,17 @@ class ModelTrainer:
                 os.makedirs(year_output_dir, exist_ok=True)
                 logger.info(f"Training run {run+1} for year {year}")
 
+                checkpoints = [os.path.join(year_output_dir, d) for d in os.listdir(year_output_dir) if d.startswith("checkpoint")]
+                latest_checkpoint = max(checkpoints, key=os.path.getmtime) if checkpoints else None
+
+                if not self.retrain and os.path.exists(os.path.join(year_output_dir, "pytorch_model.bin")) and latest_checkpoint is None:
+                    self.logger.info(f"Model for {year} already trained, skipping due to retrain flag set to False.")
+                    continue
+
                 training_args = TrainingArguments(
                     output_dir=year_output_dir,
-                    overwrite_output_dir=True,
-                    num_train_epochs=self.num_train_epochs,
+                    overwrite_output_dir=False,
+                    max_steps=self.max_steps,
                     per_device_train_batch_size=self.per_device_train_batch_size,
                     per_device_eval_batch_size=self.per_device_eval_batch_size,
                     warmup_steps=self.warmup_steps,
@@ -78,11 +85,11 @@ class ModelTrainer:
                     learning_rate=self.learning_rate,
                     evaluation_strategy="steps",
                     logging_dir=os.path.join(year_output_dir, 'logs'),
-                    logging_steps=500,
+                    logging_steps=1000,
                     load_best_model_at_end=True,
                 )
+                model = AutoModelForMaskedLM.from_pretrained(latest_checkpoint if latest_checkpoint else self.model_name)
 
-                model = AutoModelForMaskedLM.from_pretrained(self.model_name, config={'output_hidden_states': True})
                 trainer = Trainer(
                     model=model,
                     args=training_args,
@@ -90,8 +97,10 @@ class ModelTrainer:
                     eval_dataset=split_datasets['test'],
                     data_collator=DataCollatorForLanguageModeling(tokenizer=self.tokenizer, mlm=True, mlm_probability=self.mlm_probability),
                 )
-                trainer.train()
+                logger.info(f"{'Resuming' if latest_checkpoint else 'Starting'} training model for {year} in {year_output_dir}.")
+                trainer.train(resume_from_checkpoint=latest_checkpoint if latest_checkpoint else None)
                 self.save_model_and_tokenizer(model, trainer, year_output_dir)
+
 
     def save_model_and_tokenizer(self, model, trainer, output_dir):
         trainer.save_model(output_dir)
@@ -99,14 +108,18 @@ class ModelTrainer:
         logger.info(f"Saved model and tokenizer to {output_dir}")
 
 def main():
+
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    logger.info(f"Using device: {device}")
+
     parser = ArgumentParser()
     parser.add_argument("--data_source", type=str, default="ny_times", help="Source of the data to train on")
     parser.add_argument("--model_name", type=str, default="albert-base-v2", help="Pretrained model name")
     parser.add_argument("--output_dir", type=str, default="models", help="Directory to save trained models")
-    parser.add_argument("--retrain", action='store_true', help="Flag to force retraining of models")
+    parser.add_argument("--retrain", action='store_false', help="Flag to force retraining of models")
     parser.add_argument("--years_list", nargs='+', type=int, default=[1900, 1910, 1920, 1930, 1940, 1950, 1960, 1970, 1980, 1990, 2000, 2010], help="List of years to train models for")
     parser.add_argument("--batch_size", type=int, default=8, help="Training and evaluation batch size")
-    parser.add_argument("--num_epochs", type=int, default=3, help="Number of training epochs")
+    parser.add_argument("--max_steps", type=int, default=5000, help="Number of training steps")
     parser.add_argument("--num_runs", type=int, default=3, help="Number of training runs for robustness")
     parser.add_argument("--seed", type=int, default=42, help="Random seed for reproducibility")
 
@@ -119,7 +132,7 @@ def main():
         retrain=args.retrain,
         per_device_train_batch_size=args.batch_size,
         per_device_eval_batch_size=args.batch_size,
-        num_train_epochs=args.num_epochs,
+        max_steps=args.max_steps,
         num_runs=args.num_runs,
         seed=args.seed
     )

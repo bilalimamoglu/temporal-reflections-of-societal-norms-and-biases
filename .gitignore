@@ -1,0 +1,15 @@
+data/download.log
+data/processed/case_law/albert-base-v2/
+data/processed/ny_times/albert-base-v2/
+data/processed/case_law/bert-base-uncased/
+data/processed/ny_times/bert-base-uncased/
+data/processed/case_law/distilbert-base-uncased/
+data/processed/ny_times/distilbert-base-uncased/
+data/raw/case_law/
+data/raw/ny_times/
+models/case_law/albert-base-v2/
+models/ny_times/albert-base-v2/
+models/case_law/bert-base-uncased/
+models/ny_times/bert-base-uncased/
+models/case_law/distilbert-base-uncased/
+models/ny_times/distilbert-base-uncased/
