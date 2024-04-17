@@ -54,15 +54,12 @@ def main():
 
     st.sidebar.title("Filters")
     section_filters = {
-        "Raw Data": st.sidebar.checkbox("Raw Data", True),
         "Preprocessed Data": st.sidebar.checkbox("Preprocessed Data", True),
         "Training Runs": st.sidebar.checkbox("Training Runs", True)
     }
     selected_model_types = st.sidebar.multiselect("Select Model Types", model_types, default=model_types)
     selected_data_sources = st.sidebar.multiselect("Select Data Sources", data_sources, default=data_sources)
 
-    if section_filters["Raw Data"]:
-        create_section("Raw Data", selected_data_sources, selected_model_types, years, "data/raw/{data_source}/{year}/{data_source}_{year}.csv", show_section=section_filters["Raw Data"])
     if section_filters["Preprocessed Data"]:
         create_section("Preprocessed Data", selected_data_sources, selected_model_types, years, "data/processed/{data_source}/{model_type}/{year}/train_dataset", show_section=section_filters["Preprocessed Data"])
     if section_filters["Training Runs"]:
