@@ -13,17 +13,21 @@ def create_section(title, selected_data_sources, selected_model_types, years, se
         for model_type in selected_model_types:
             for data_source in selected_data_sources:
                 st.write(f"**Model: {model_type}, Data Source: {data_source}**")
-                grid = [['' for _ in range(len(years) + 2)] for _ in range(1 + (num_runs if num_runs else 1))]
+                num_runs = num_runs or 1  # Set default to 1 if num_runs is None
+                grid = [['' for _ in range(len(years) + 2)] for _ in range(1 + num_runs)]
                 grid[0] = ['Year'] + [str(year) for year in years] + ['Completed/Total']
                 for run in range(1, num_runs + 1):
                     grid[run][0] = f'Run {run}'
                     row_completed = 0
                     for j, year in enumerate(years):
-                        run_path = os.path.join(section_path.format(data_source=data_source, model_type=model_type, year=year), f'run_{run}')
+                        run_path = os.path.join(section_path.format(data_source=data_source, model_type=model_type, year=year), f'run_{run}' if num_runs > 1 else '')
                         if os.path.exists(run_path):
-                            checkpoint_dirs = [os.path.join(run_path, d) for d in os.listdir(run_path) if d.startswith("checkpoint")]
-                            latest_checkpoint = max(checkpoint_dirs, key=lambda x: x if x.endswith('checkpoint-5000') else '') if checkpoint_dirs else None
-                            true_condition = True if latest_checkpoint and latest_checkpoint.endswith('checkpoint-5000') else None
+                            if num_runs > 1:
+                                checkpoint_dirs = [os.path.join(run_path, d) for d in os.listdir(run_path) if d.startswith("checkpoint")]
+                                latest_checkpoint = max(checkpoint_dirs, key=lambda x: x if x.endswith('checkpoint-5000') else '') if checkpoint_dirs else None
+                                true_condition = latest_checkpoint and latest_checkpoint.endswith('checkpoint-5000')
+                            else:
+                                true_condition = check_existence(run_path)  # For non-training sections just check the file/directory exists
                             if true_condition:
                                 grid[run][j + 1] = '✅'
                                 row_completed += 1
@@ -46,15 +50,21 @@ def main():
     data_sources = ['case_law', 'ny_times']
     model_types = ['bert-base-uncased', 'distilbert-base-uncased', 'albert-base-v2']
     years = [1900, 1910, 1920, 1930, 1940, 1950, 1960, 1970, 1980, 1990, 2000, 2010]
-    num_runs = 3
+    num_runs = 3  # This should only be used for "Training Runs" section
 
     st.sidebar.title("Filters")
     section_filters = {
+        "Raw Data": st.sidebar.checkbox("Raw Data", True),
+        "Preprocessed Data": st.sidebar.checkbox("Preprocessed Data", True),
         "Training Runs": st.sidebar.checkbox("Training Runs", True)
     }
     selected_model_types = st.sidebar.multiselect("Select Model Types", model_types, default=model_types)
     selected_data_sources = st.sidebar.multiselect("Select Data Sources", data_sources, default=data_sources)
 
+    if section_filters["Raw Data"]:
+        create_section("Raw Data", selected_data_sources, selected_model_types, years, "data/raw/{data_source}/{year}/{data_source}_{year}.csv", show_section=section_filters["Raw Data"])
+    if section_filters["Preprocessed Data"]:
+        create_section("Preprocessed Data", selected_data_sources, selected_model_types, years, "data/processed/{data_source}/{model_type}/{year}/train_dataset", show_section=section_filters["Preprocessed Data"])
     if section_filters["Training Runs"]:
         create_section("Training Runs", selected_data_sources, selected_model_types, years, "models/{data_source}/{model_type}/{year}", num_runs=num_runs, show_section=section_filters["Training Runs"])
 
