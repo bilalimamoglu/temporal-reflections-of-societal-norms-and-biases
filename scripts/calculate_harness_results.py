@@ -8,7 +8,10 @@ from transformers import AutoTokenizer, AutoModelForSequenceClassification
 from langtest import Harness  # Ensure to import Harness from its respective module
 
 # Setup logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(filename="data/logs/harness_logs.log",
+                    format='%(asctime)s - %(levelname)s - %(message)s',
+                    filemode='w',
+                    level=logging.DEBUG)
 
 class GenderBiasTester:
     def __init__(self, data_source, model_names, years_list, num_runs=3):
