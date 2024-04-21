@@ -29,6 +29,7 @@ class GenderBiasTester:
                     model_dir = self._prepare_model_directory(model_name, year, run)
                     if model_dir:
                         results_file = os.path.join(self.results_path, model_name, 'raw_results', f'{year}_results_run_{run}.csv')
+                        self.ensure_directory_exists(results_file)
                         if not os.path.exists(results_file):
                             self._run_single_test(model_dir, results_file)
 
@@ -68,6 +69,12 @@ class GenderBiasTester:
 
         results_df.to_csv(results_file, index=False)
         logging.info(f"Results saved to {results_file}")
+
+    def ensure_directory_exists(self, file_path):
+        directory = os.path.dirname(file_path)
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+            logging.info(f"Created directory: {directory}")
 
 def main(data_source, years_list, model_names):
     tester = GenderBiasTester(data_source, model_names, years_list)
