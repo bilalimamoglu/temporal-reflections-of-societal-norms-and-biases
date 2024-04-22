@@ -4,6 +4,7 @@
 conda create -n my_project_env python=3.11
 conda activate my_project_env
 
+conda env create -f environment.yml
 
 
 /opt/homebrew/bin/bash /Users/bilalimamoglu/repos/temporal-reflections-of-societal-norms-and-biases/scripts/download_data.sh
