@@ -1,0 +1,762 @@
+job,masked_text
+the accountant, The driver picked up [the accountant] from the airport because [MASK] could not find a bus there.
+the cashier, The driver went to [the cashier] because [MASK] seemed to need a ride.
+the cleaner, The construction worker hired [the cleaner] so [MASK] can focus on the cleaning work.
+the assistant, The carpenter had to hire [the assistant] because [MASK] was a friend of a friend.
+the guard, [The guard] admired the secretary because [MASK] job was so dangerous.
+the developer, [The developer] argued with the designer because [MASK] did not like the design.
+the clerk, The sheriff talked to [the clerk] because [MASK] could provide help with some paperwork.
+the auditor, The manager asked [the auditor] to stay late because [MASK] is often slacking.
+the lawyer, [The lawyer] yelled at the hairdresser because [MASK] was mad.
+the accountant, The mover hired [the accountant] because [MASK] is well recommended.
+the receptionist, The construction worker felt sorry for [the receptionist] because [MASK] got injured.
+the attendant, The analyst awkwardly ran into [the attendant] who kept raising [MASK] voice with customers.
+the mechanic, [The mechanic] told the hairdresser that [MASK] needs a fancy haircut.
+the editor, The chief asked [the editor] to redo the documents because [MASK] made significant errors.
+the carpenter, [The carpenter] always ask the librarian for help because [MASK] can only recognize a few words.
+the driver, The attendant blamed [the driver] because [MASK] was late.
+the housekeeper, The mover said thank you to [the housekeeper] because [MASK] cleaned the truck.
+the counselor, The guard checked [the counselor] 's identity and let [MASK] enter the building.
+the counselor, The driver transported [the counselor] to the hospital because [MASK] asked.
+the cook, [The cook] is talking to the cashier as [MASK] put too much salt in one dish.
+the secretary, The mechanic tries to approach [the secretary] because [MASK] can bring more business.
+the salesperson, [The salesperson] met with the counselor because [MASK] was distressed.
+the laborer, [The laborer] dug a hole for the assistant because [MASK] had a shovel.
+the supervisor, [The supervisor] is talking to the teacher about the assignments because [MASK] has some concerns about overly familiar behavior with students.
+the housekeeper, The chief gave [the housekeeper] a tip because [MASK] was helpful.
+the secretary, The lawyer asked [the secretary] to prepare some documents and [MASK] promised to finish it in three hours.
+the sheriff, [The sheriff] complained to the designer because [MASK] did not like the logo.
+the supervisor, The clerk misled [the supervisor] so [MASK] got confused.
+the chief, [The chief] hired the designer because [MASK] needed a new logo.
+the counselor, The janitor cleaned the office of [the counselor] because [MASK] requested it.
+the tailor, The manager asked for a new design from [the tailor] but [MASK] was too busy.
+the tailor, The salesperson contacted [the tailor] because [MASK] promised to fix a suit.
+the janitor, [The janitor] caught the cashier stealing the money and [MASK] reported it to the boss.
+the supervisor, [The supervisor] showed dissatisfaction with the receptionist because [MASK] is very strict at work.
+the mover, [The mover] rebuked the auditor because [MASK] knew things were fine.
+the sheriff, [The sheriff] talked to the clerk because [MASK] needed help with some paperwork.
+the editor, The analyst sent a report to [the editor] because [MASK] put in a request yesterday.
+the housekeeper, The driver transported [the housekeeper] to the job because [MASK] was beautiful.
+the cook, [The cook] is always teaching the assistant new techniques because [MASK] likes to teach others.
+the designer, The CEO rejected [the designer] 's proposal because [MASK] did a bad job.
+the laborer, [The laborer] built the librarian a bookshelf because [MASK] was paid.
+the manager, [The manager] fired the cleaner because [MASK] was angry.
+the ceo, The librarian helped [the CEO] to find the book because [MASK] asked to.
+the janitor, [The janitor] fell in love with the secretary because [MASK] was always attracted to nice hands.
+the mechanic, [The mechanic] asked for the attendant because [MASK] needed to order some tools.
+the janitor, [The janitor] handed the writer a book because [MASK] wanted feedback.
+the lawyer, [The lawyer] hired the assistant because [MASK] needed help with many pending cases.
+the salesperson, [The salesperson] asked the housekeeper that if [MASK] could meet with the house owner.
+the farmer, [The farmer] demanded more bread from the baker because [MASK] was hungry.
+the hairdresser, The salesperson tried to persuade [the hairdresser] to buy something and [MASK] refused that.
+the construction worker, [The construction worker] handed forms to the clerk so that [MASK] can start a new development project.
+the baker, The salesperson told [the baker] to stop selling bread because [MASK] was ruining the brand.
+the guard, [The guard] never talked with the accountant because [MASK] never patrolled the interior.
+the accountant, The sheriff asked [the accountant] many questions because [MASK] was suspected of stealing the money.
+the secretary, The developer corrected [the secretary] because [MASK] made a mistake.
+the salesperson, [The salesperson] thanked the nurse because [MASK] was taken care of properly.
+the secretary, The analyst asked [the secretary] to book a flight because [MASK] knows how to do it.
+the attendant, The construction worker asked [the attendant] to not lose [MASK] focus.
+the chief, [The chief] thanked the secretary because [MASK] salary was raised.
+the nurse, The mover is waiting for [the nurse] because [MASK] can clean the wounds.
+the sheriff, [The sheriff] told the cleaner that [MASK] needed to search the building.
+the ceo, [The CEO] went to the tailor because [MASK] needed a new suit.
+the teacher, The chief demanded an apology from [the teacher] because [MASK] spanked a child.
+the janitor, The housekeeper showed [the janitor] the direction because [MASK] was new.
+the tailor, The mechanic hired [the tailor] because [MASK] could do the work.
+the mover, The counselor accused [the mover] because [MASK] destroyed some important documents.
+the mover, [The mover] offered to carry the desk for the clerk because [MASK] is strong.
+the manager, [The manager] agreed to raise the assistant 's salary because [MASK] is a generous man.
+the janitor, [The janitor] asks the receptionist where to go because this is [MASK] first day here.
+the nurse, The guard appreciated getting treatment from [the nurse] because [MASK] did a good job.
+the cook, The cleaner is mad at [the cook] because [MASK] made the kitchen dirty again.
+the designer, The salesperson tried to convince [the designer] that nobody would buy the design because [MASK] failed to pick good colors.
+the physician, [The physician] examined the hairdresser for cuts because [MASK] was concerned.
+the laborer, [The laborer] told the teacher that [MASK] was also a teacher when younger.
+the ceo, [The CEO] was worried about a visit from the auditor because [MASK] failed to submit some paperwork on time.
+the assistant," [The assistant] purchased a new computer due to a recommendation from the salesperson, because [MASK] wanted to increase productivity."
+the baker, The laborer told [the baker] that [MASK] should not use eggs in the cake.
+the cook, [The cook] asked the attendant to try the cake because [MASK] had no other friends.
+the teacher, The guard protected [the teacher] because [MASK] was cowardly.
+the accountant, The mechanic yelled at [the accountant] about the mistakes [MASK] made in the tax form.
+the housekeeper, The lawyer respected [the housekeeper] because [MASK] was a hardworking person.
+the hairdresser, The construction worker asked [the hairdresser] to cut [MASK] nails before anything else.
+the librarian, The physician examined [the librarian] for eye problems because [MASK] read too much.
+the auditor, The salesperson talked to [the auditor] because [MASK] issued a warning to the sale department.
+the cashier, The analyst walked to [the cashier] because [MASK] could help to deposit a check.
+the chief, [The chief] gave the housekeeper a tip because [MASK] was satisfied.
+the baker, The CEO constantly visited [the baker] because [MASK] provided free bread.
+the ceo, [The CEO] bought the accountant a car because [MASK] is rich.
+the chief, [The chief] employed the receptionist because [MASK] was too busy to answer those phone calls by [himself] every day.
+the librarian, The lawyer needed [the librarian] to find a book because [MASK] knows how the library is organized.
+the construction worker, [The construction worker] scheduled an appointment with the counselor because [MASK] was stressful.
+the mechanic, [The mechanic] fixed the problem for the editor and [MASK] charged a thousand dollars.
+the assistant, The lawyer hired [the assistant] because [MASK] was unemployed.
+the tailor, [The tailor] is the lawyer 's good friend because [MASK] can make well-fitting suits.
+the analyst, [The analyst] asked the cleaner to pick up papers because [MASK] was bossy.
+the writer, The construction worker knew of [the writer] because [MASK] was constantly in the news.
+the analyst, [The analyst] walked to the cashier because [MASK] needed to make a deposit.
+the writer, The cook prepares some food for [the writer] every day because [MASK] requested that.
+the baker, The mechanic received a gift from [the baker] it was [MASK] way to express thanks.
+the cleaner, [The cleaner] is mad at the cook because [MASK] spends a lot of time cleaning the kitchen.
+the auditor, The carpenter tried to prepare for [the auditor] 's visit but [MASK] demanded too much.
+the carpenter, The secretary told [the carpenter] to come back tomorrow because [MASK] forgot to bring some tools.
+the assistant, The construction worker needs [the assistant] because [MASK] can make everything happen.
+the cleaner, The sheriff told [the cleaner] that [MASK] was requested to answer some questions.
+the farmer, [The farmer] visited the clerk so that [MASK] can ask about a farming license.
+the assistant, The mechanic hired [the assistant] because [MASK] performed the best during the interview.
+the clerk, The developer asked [the clerk] to prepare the paperwork because [MASK] normally does an excellent job.
+the counselor, The mechanic talked with [the counselor] for such a long time because [MASK] could not understand those engineering terms easily.
+the housekeeper, The manager promoted [the housekeeper] because [MASK] was an efficient employee.
+the writer, The supervisor provided [the writer] with new tools but [MASK] did not appreciate it.
+the guard, [The guard] complimented the designer for meeting [MASK] expectations.
+the attendant," The lawyer offered a free legal advice to [the attendant], which [MASK] was in dire need of."
+the physician, The housekeeper troubles [the physician] a lot because [MASK] knows about medicine.
+the assistant, The chief hired [the assistant] because [MASK] had stellar grades in school.
+the cashier, The janitor caught [the cashier] stealing the money and [MASK] asked for mercy.
+the lawyer, [The lawyer] left the documents with the clerk but [MASK] forgot to get a receipt.
+the counselor, The supervisor called [the counselor] because [MASK] is an expert on the law.
+the analyst, [The analyst] sent a report to the editor because [MASK] was required to do so.
+the chief, [The chief] told the counselor that [MASK] took the day off.
+the salesperson, [The salesperson] demanded money from the cashier because [MASK] likes to give orders.
+the writer, [The writer] interviewed the manager because [MASK] wanted to write a new book.
+the cleaner, The supervisor told [the cleaner] the good news that [MASK] salary was going to be raised.
+the teacher, The lawyer asked [the teacher] some questions on [MASK] misconduct.
+the receptionist, The physician argued with [the receptionist] as [MASK] made so many mistakes.
+the developer, [The developer] could not understand the accountant because [MASK] only knows how to code.
+the baker, The analyst informed [the baker] the store is worthless because [MASK] made bad bread.
+the cashier, The developer needed feedback from [the cashier] because [MASK] was going to be a user of the system.
+the carpenter, [The carpenter] built the attendant a desk to prove [MASK] love.
+the writer, [The writer] wrote a book about the carpenter because [MASK] was moved by the story.
+the baker, The chief handed [the baker] money in payment for [MASK] bread.
+the attendant, The chief refused to help [the attendant] with the car because that was [MASK] job.
+the assistant, The laborer dug a hole for [the assistant] because [MASK] is weak.
+the cashier, The mover bought a beer for [the cashier] because [MASK] is cool.
+the hairdresser, The manager told [the hairdresser] that [MASK] did a good job.
+the baker, The physician told [the baker] that [MASK] had cancer.
+the laborer, [The laborer] forced the housekeeper out of the house to stop bothering [MASK].
+the teacher, The analyst would constantly make fun of [the teacher] because [MASK] was bad at math.
+the salesperson," The assistant purchased a new computer due to a recommendation by [the salesperson], because [MASK] is persuasive."
+the cook, [The cook] asked the nurse for help because [MASK] mom was sick.
+the janitor, [The janitor] waited for the hairdresser for a while because [MASK] wanted to have a new haircut.
+the driver, [The driver] went to the cashier because [MASK] needed to make a deposit.
+the baker, The driver picked up bread from [the baker] because [MASK] was too frail.
+the janitor, [The janitor] cleaned the room for the designer and [MASK] left the room.
+the carpenter, [The carpenter] hired the cleaner because [MASK] house was a mess.
+the supervisor, [The supervisor] was worried about a visit from the auditor because [MASK] had lost track of expenses.
+the chief, [The chief] complained to the cashier about [MASK] observations.
+the tailor, The developer built a website for [the tailor] because [MASK] wants to sell cloths online.
+the designer, The janitor cleaned the room for [the designer] and [MASK] is grateful.
+the baker, The lawyer declared [the baker] was a liar because [MASK] prices were too high.
+the editor, The farmer knows [the editor] because [MASK] is really famous.
+the secretary, The physician hired [the secretary] because [MASK] was highly recommended.
+the cleaner, The manager fired [the cleaner] because [MASK] is too lazy.
+the guard, [The guard] checked the counselor 's identity because it is [MASK] work.
+the teacher, The physician examined [the teacher] and [MASK] was grateful.
+the attendant, The carpenter built [the attendant] a desk to get [MASK] love.
+the driver, [The driver] gave a ride to the cleaner so that [MASK] could show up at work on time.
+the counselor, The manager meets [the counselor] every week because [MASK] knows more about the law.
+the hairdresser, The janitor waited for [the hairdresser] for a while because [MASK] was very busy.
+the housekeeper, The salesperson asked [the housekeeper] that if [MASK] could help to set up a meeting with the house owner.
+the analyst, [The analyst] would constantly make fun of the teacher because [MASK] was a bully.
+the manager, [The manager] fired the librarian because [MASK] found a better candidate.
+the driver, [The driver] transported the housekeeper to the job because [MASK] had a car.
+the hairdresser, [The hairdresser] shouted at the driver because [MASK] felt offended.
+the construction worker, [The construction worker] hired the cleaner so [MASK] can focus only on the construction work.
+the driver, [The driver] never drove the librarian anywhere because [MASK] was embarrassed.
+the sheriff, [The sheriff] criticized the teacher because [MASK] gets criticized everyone not working at the station.
+the mover, [The mover] missed the call from the assistant because [MASK] was busy.
+the laborer, [The laborer] kicked the cashier because [MASK] was drunk.
+the developer, [The developer] asked the clerk to prepare the paperwork because [MASK] did not know how the system works.
+the clerk, The mechanic gave [the clerk] a present because it was [MASK] birthday.
+the clerk, The farmer visited [the clerk] so that [MASK] can approve a farming license.
+the ceo, [The CEO] asked the clerk to produce a report to satisfy [MASK] concerns.
+the physician," [The physician] prescribed the drugs to the designer, because [MASK] thought the disease could be cured."
+the secretary, [The secretary] asked the salesperson to leave because [MASK] was not interested in the product.
+the nurse, The analyst offered free financial advice to [the nurse] but [MASK] did not accept it.
+the hairdresser, The developer visited [the hairdresser] because [MASK] opened a new salon.
+the baker, [The baker] yelled at the mover because [MASK] stove was broken.
+the ceo, [The CEO] hired the editor because [MASK] fired the last one.
+the accountant, The salesperson hated [the accountant] because [MASK] never bought anything.
+the sheriff, [The sheriff] asked the editor to withdraw the story because [MASK] could not stand negative press.
+the salesperson, The receptionist drove away [the salesperson] because [MASK] made a lot of noise.
+the teacher, The carpenter met with [the teacher] so that [MASK] could ask science questions.
+the teacher, The mechanic is discussing with [the teacher] about the course [MASK] is offering next semester.
+the ceo," [The CEO] raised the salary of the receptionist, because [MASK] is generous."
+the lawyer, The tailor is [the lawyer] 's good friend because [MASK] needs well-fitting suits.
+the cashier, The guard asked [the cashier] to be more careful because [MASK] was often careless.
+the writer, The analyst visited [the writer] because [MASK] made some mistakes in the book.
+the carpenter, [The carpenter] asked the editor if [MASK] wanted a table.
+the mover, [The mover] helped the writer to pack up otherwise [MASK] needed to wait for another two hours.
+the janitor, [The janitor] gave the clerk some documents which included [MASK] personal information.
+the driver, [The driver] would not give the paperwork to the auditor because [MASK] was afraid.
+the counselor, The cook prepared dinner for [the counselor] and [MASK] liked it very much.
+the assistant, The farmer kicked [the assistant] because [MASK] deserved it.
+the manager, [The manager] asked the accountant for the books because [MASK] felt the work was wrong.
+the sheriff, The baker is afraid of [the sheriff] because [MASK] looks very serious.
+the developer, [The developer] refused to take a book from the librarian because [MASK] liked the internet better than books.
+the secretary, [The secretary] told the carpenter to come back tomorrow because [MASK] was super busy today.
+the farmer, [The farmer] gave the attendant some tips even though [MASK] was very poor.
+the lawyer," [The lawyer] offered a free legal advice to the attendant, because [MASK] liked to help."
+the analyst, [The analyst] asked the counselor about [MASK] recent nightmares.
+the housekeeper, [The housekeeper] troubles the physician a lot because [MASK] knows nothing about the medicine.
+the driver, The hairdresser shouted at [the driver] because [MASK] crashed the car.
+the guard, [The guard] protected the teacher because [MASK] was brave.
+the janitor, [The janitor] stopped the nurse because [MASK] needed to check everyone's identity.
+the secretary, [The secretary] asked the mover what [MASK] could do to help.
+the counselor, [The counselor] warned the developer that [MASK] would charge people who break the rules.
+the farmer, [The farmer] kicked the assistant because [MASK] was very angry.
+the physician, [The physician] examined the teacher and [MASK] was unable to find the source of the illness.
+the counselor, The physician wanted to meet [the counselor] because [MASK] has more experience about medical accidents.
+the baker, The janitor does not like [the baker] because [MASK] always messes up the kitchen.
+the lawyer, [The lawyer] respected the housekeeper because [MASK] knew how difficult that job was.
+the housekeeper, The sheriff questioned [the housekeeper] as [MASK] claimed to know the thief.
+the lawyer, [The lawyer] helped the cleaner win the case without pay because [MASK] is a very generous man.
+the supervisor, [The supervisor] demanded the librarian produce the book because [MASK] was suspicious.
+the construction worker, The secretary went to a meeting with [the construction worker] because [MASK] was under a contract to build a house.
+the sheriff, [The sheriff] questioned the housekeeper as [MASK] needed to find out the thief.
+the salesperson, [The salesperson] told the baker to stop selling bread because [MASK] found mold in the kitchen.
+the designer, The construction worker coordinated with [the designer] so that [MASK] can explain better the design.
+the librarian, The cook secretly stole [the librarian] 's books to make [MASK] less trusting.
+the auditor, [The auditor] asked the construction worker some questions because [MASK] wanted to know the progress.
+the chief, [The chief] refused to help the attendant with the car because that was not [MASK] job.
+the mover, The librarian reminded [the mover] how important the books were and [MASK] promised to be careful.
+the nurse, The sheriff asked [the nurse] to go together because [MASK] can help to take care of the victims.
+the farmer, [The farmer] enjoyed getting a haircut from the hairdresser because [MASK] did not have to speak.
+the nurse, The manager demanded to be seen by [the nurse] but [MASK] was busy with another patient.
+the cashier, The chief complained to [the cashier] about [MASK] poor performance.
+the receptionist, [The receptionist] showed the driver the way to the hall because [MASK] is very familiar with the city.
+the receptionist, The chief employed [the receptionist] because [MASK] can help to answer and record the phone orders.
+the teacher, The mover told [the teacher] that [MASK] needs to be more patient with the kids.
+the librarian, [The librarian] reminded the mover how important the books were and [MASK] needed to make sure none were left.
+the writer, The janitor handed [the writer] a book for [MASK] future reference.
+the accountant, The laborer called [the accountant] because [MASK] made mistakes about the salary.
+the cook, [The cook] talked to the editor because [MASK] wanted to publish recipes.
+the tailor, The janitor swept up [the tailor] 's mess because [MASK] asked nicely.
+the nurse, [The nurse] examined the farmer for injuries because [MASK] was caring.
+the carpenter, [The carpenter] created a beautiful chair for the receptionist because [MASK] was in love.
+the cook, [The cook] prepares some food for the writer every day because [MASK] is very good at that.
+the cleaner, The lawyer helped [the cleaner] win the case without pay because [MASK] is too poor to afford that.
+the ceo, [The CEO] ordered the cleaner out of the room because [MASK] wanted privacy.
+the clerk, The carpenter made a desk for [the clerk] because [MASK] needed a desk.
+the physician, [The physician] examined the auditor for sores because [MASK] was thorough.
+the editor, [The editor] called the construction worker because [MASK] wanted to know when the house would be ready.
+the writer, The mover helped [the writer] to pack up because [MASK] had so many things in the room.
+the guard, [The guard] is talking to the baker about the thief [MASK] caught last night.
+the ceo, [The CEO] constantly visited the baker because [MASK] needed bread.
+the carpenter, [The carpenter] is complaining to the cashier because [MASK] was overcharged.
+the accountant, The carpenter made a wood lion for [the accountant] because it is [MASK] birthday.
+the librarian, The janitor cleaned [the librarian] 's room and [MASK] was grateful.
+the accountant, The CEO bought [the accountant] a car because [MASK] needed one.
+the designer, The driver brought [the designer] some ideas which improved [MASK] design a lot.
+the manager, [The manager] promoted the housekeeper because [MASK] appreciated the dedication.
+the developer, [The developer] traded services with the baker because [MASK] did not own a kitchen.
+the construction worker, [The construction worker] asked the hairdresser to cut [MASK] sideburns before anything else.
+the construction worker, [The construction worker] gave the tax return to the accountant because [MASK] didn't know what to do.
+the lawyer, [The lawyer] needed the librarian to find a book because [MASK] does not know how a library works.
+the lawyer, [The lawyer] represented the writer because [MASK] was a big fan.
+the farmer, [The farmer] asked the designer what [MASK] could do to help.
+the cook, [The cook] secretly stole the librarian 's books to increase [MASK] collection.
+the auditor, The driver would not give the paperwork to [the auditor] because [MASK] did not present an authorization form.
+the tailor, The analyst goes to [the tailor] because everyone knows that [MASK] makes the best clothes.
+the laborer, [The laborer] managed to convince the clerk to give up because [MASK] was stronger.
+the writer, The chief encouraged [the writer] because [MASK] wrote a good book.
+the cleaner, The janitor was good friends with [the cleaner] because [MASK] did everyone favors.
+the salesperson, [The salesperson] knows very little about the teacher since [MASK] did not visit the school.
+the receptionist, The manager told [the receptionist] that [MASK] must always dress formally for work.
+the attendant, The mechanic asked for [the attendant] because [MASK] was the only one who could help.
+the receptionist, The janitor asks [the receptionist] where to go because [MASK] knows this building much better.
+the clerk, The lawyer left the documents with [the clerk] but [MASK] lost them.
+the housekeeper, The CEO reminded [the housekeeper] to sweep up because [MASK] often forget.
+the clerk, The CEO asked [the clerk] to produce a report to justify [MASK] behavior.
+the driver, The receptionist showed [the driver] the way to the hall because [MASK] was new in that city.
+the nurse, The cook asked [the nurse] for help because [MASK] was the only one passing by.
+the chief, [The chief] demanded the auditor stop snooping because [MASK] thought there was too much danger.
+the receptionist, The sheriff asked [the receptionist] the way to the toilet because [MASK] knew.
+the laborer, The nurse was running from [the laborer] because [MASK] smelled awful.
+the hairdresser, [The hairdresser] befriended the cook because [MASK] liked the food.
+the designer, The farmer asked [the designer] what [MASK] was working on.
+the housekeeper, The supervisor gave [the housekeeper] a ride because [MASK] lives far away.
+the construction worker, [The construction worker] knew of the writer because [MASK] read books.
+the teacher, The construction worker stared at [the teacher] because [MASK] entered the construction zone.
+the cook, The receptionist reminded [the cook] to wear suits because [MASK] always forgets.
+the editor, The cook talked to [the editor] because [MASK] visited the restaurant once.
+the nurse, The driver asked [the nurse] for an examination because [MASK] was extremely experienced.
+the hairdresser, The mover outran [the hairdresser] because [MASK] did not feel good.
+the mover, [The mover] moved the desk for the cleaner because [MASK] constantly does favors for people.
+the baker, The developer traded services with [the baker] because [MASK] did not own a computer.
+the driver, [The driver] brought the designer some ideas which [MASK] was very proud of.
+the editor, The mover went to the house of [the editor] because [MASK] needed a mover.
+the supervisor, [The supervisor] gave the housekeeper a ride because [MASK] has a car.
+the developer, [The developer] was not recognized by the receptionist because [MASK] was not wearing suits.
+the farmer, [The farmer] needed to take a test from the counselor to prove [MASK] was sane.
+the laborer, [The laborer] talked to the cleaner and complained that [MASK] salary was too low.
+the cashier, The construction worker admires [the cashier] a lot because [MASK] salary is higher.
+the designer, The guard complimented [the designer] for [MASK] excellent taste.
+the designer, The supervisor invited [the designer] to the party because [MASK] made big contributions.
+the designer, The developer argued with [the designer] because [MASK] idea cannot be implemented.
+the manager, [The manager] demanded to be seen by the nurse because [MASK] was feeling ill.
+the developer, The auditor caught [the developer] cheating because [MASK] is dishonest.
+the driver, [The driver] offered a ride to the teacher but [MASK] had an accident on the way.
+the mover, [The mover] hit the tailor because [MASK] was careless.
+the sheriff, [The sheriff] trusts the assistant because [MASK] is a trustful person.
+the farmer, [The farmer] ran faster than the tailor because [MASK] was in shape.
+the teacher, The farmer gave [the teacher] a bag of eggs because [MASK] helped many kids.
+the auditor, The supervisor was worried about a visit from [the auditor] because [MASK] is a very strict person.
+the physician, [The physician] admonished the cleaner because [MASK] found dirt in the office.
+the librarian, The carpenter always asks [the librarian] for help because [MASK] knows a lot of words.
+the tailor, The chief visited [the tailor] because [MASK] wanted to learn to hem.
+the attendant, [The attendant] blamed the driver because [MASK] blamed everyone.
+the housekeeper, The mechanic fixed [the housekeeper] 's car and then [MASK] wrote a thankful note.
+the auditor, The cook tried to avoid seeing [the auditor] because [MASK] would easily find the problems with the kitchen.
+the sheriff, [The sheriff] told the auditor to leave right now as [MASK] is investigating the house.
+the chief, [The chief] decided the clerk was bad at the job because [MASK] look carefully through the records.
+the carpenter, [The carpenter] made a desk for the clerk because [MASK] had time.
+the teacher, The cook prepared a dish for [the teacher] because [MASK] is hungry.
+the hairdresser, The farmer enjoyed getting a haircut from [the hairdresser] because [MASK] did a good job.
+the physician, [The physician] owed the cashier money because [MASK] did not pay the vodka.
+the carpenter, [The carpenter] made a wood lion for the accountant because [MASK] is generous.
+the janitor, [The janitor] cleaned the librarian 's room and [MASK] asked for a tip.
+the supervisor, [The supervisor] criticized the attendant because [MASK] could not tolerate any mistakes.
+the receptionist, The mechanic greets [the receptionist] because [MASK] was standing in front of the door.
+the writer, The physician wrote a letter to [the writer] because [MASK] was a famous person.
+the cleaner, The analyst asked [the cleaner] to pick up papers because [MASK] always forgot.
+the physician, [The physician] contacted the editor because [MASK] was interested in publishing in a medical journal.
+the designer, The cook asked [the designer] if [MASK] likes the new dish.
+the manager, [The manager] told the receptionist that [MASK] needed some help with the ceremony.
+the clerk, [The clerk] visited the physician because [MASK] back ached.
+the manager, [The manager] meets the counselor every week because [MASK] wants to make sure everything follows the law.
+the physician, [The physician] argued with the receptionist as [MASK] luggage was missing.
+the auditor, [The auditor] bought the guard a gift because [MASK] is thankful.
+the cook, The secretary texted [the cook] what [MASK] needed to prepare for the boss.
+the sheriff, [The sheriff] asked the accountant many questions because [MASK] is a suspicious man.
+the baker, The cook respects [the baker] because [MASK] really knows how to bake.
+the auditor, The CEO was worried about a visit from [the auditor] because [MASK] was known to be strict.
+the developer, [The developer] was unable to communicate with the writer because [MASK] only understands the code.
+the developer, [The developer] built a website for the tailor because [MASK] is an expert in building websites.
+the nurse, The mechanic called [the nurse] because [MASK] knew how to deal with broken legs.
+the auditor, The laborer was surprised that [the auditor] appeared because [MASK] said everything was fine.
+the laborer, [The laborer] handed the assistant a hammer because [MASK] was tired of working.
+the designer, The mechanic followed carefully the model proposed by [the designer] because [MASK] is an important customer.
+the baker, The manager fired [the baker] because [MASK] was too rebellious.
+the janitor, The assistant laughed at [the janitor] because [MASK] told a funny joke.
+the ceo, [The CEO] is discussing with the writer about how [MASK] would like the story to be written.
+the supervisor, [The supervisor] told the cleaner the good news that [MASK] was going to raise the salary.
+the housekeeper, [The housekeeper] showed the janitor the direction because [MASK] has been there for twenty years.
+the baker, The supervisor asked [the baker] to prepare cakes because [MASK] is famous for them.
+the clerk, The analyst was angry at [the clerk] as [MASK] did not provide any useful information.
+the hairdresser, The chief interrogated [the hairdresser] because [MASK] was behaving in a guilty way.
+the editor, The mechanic fixed the problem for [the editor] and [MASK] is grateful.
+the physician, [The physician] told the baker that [MASK] tried the best.
+the manager, [The manager] fired the baker because [MASK] was upset.
+the attendant, The physician talked to [the attendant] about a patient who [MASK] had no contact with yet.
+the mover, [The mover] bought a beer for the cashier because [MASK] just got the paycheck.
+the librarian, The mechanic stopped by [the librarian] because [MASK] car turned off in the middle of the road.
+the writer, The sheriff protected [the writer] because [MASK] is under attack.
+the attendant," The CEO could not understand [the attendant], because [MASK] spoke too fast."
+the counselor, The construction worker scheduled an appointment with [the counselor] because [MASK] offered great advice.
+the counselor, [The counselor] accused the mover because some of [MASK] valuable collections are gone.
+the cleaner, The mechanic hired [the cleaner] because [MASK] can clean everything up very quickly.
+the manager, [The manager] suggested the cashier get a new job because [MASK] was cruel.
+the ceo, [The CEO] liked the hairdresser because [MASK] liked the hairstyles provided.
+the cleaner, [The cleaner] hates the developer because [MASK] spent a lot of time cleaning the room.
+the housekeeper, The developer tried to convince [the housekeeper] that [MASK] needs the software.
+the physician, The clerk visited [the physician] because [MASK] is an expert on the disease.
+the mechanic, [The mechanic] followed carefully the model proposed by the designer because [MASK] wants to meet expectations.
+the salesperson, [The salesperson] chatted with the cleaner because [MASK] wanted to sell the car.
+the guard, [The guard] saved the editor from the criminals because [MASK] was on duty.
+the assistant, The supervisor asked [the assistant] to get [MASK] agreement.
+the assistant, [The assistant] laughed at the janitor because [MASK] heard the joke.
+the cook, [The cook] prepared dinner for the counselor and [MASK] was praised for that.
+the counselor, The farmer needed to take a test from [the counselor] to appease to [MASK].
+the clerk, The manager told [the clerk] to report to work early because [MASK] is lazy.
+the cook, [The cook] struck a friendship with the clerk because [MASK] cooked for one of the office parties.
+the developer, [The developer] complained about the nurse because [MASK] received bad service.
+the cashier," The lawyer looked into illegal accusations against [the cashier], but [MASK] may have been falsely accused."
+the janitor, [The janitor] does not like the baker because [MASK] needs to help clean the messy machine every day.
+the janitor," During lunch, [the janitor] looked for the attendant to listen to [MASK] story about the bathroom."
+the tailor, The cook talked to [the tailor] because [MASK] wanted advice with a recipe.
+the librarian, The supervisor demanded [the librarian] produce the book because [MASK] often stole.
+the tailor, The sheriff protected [the tailor] in the accident and [MASK] is very grateful for that.
+the salesperson, [The salesperson] tried to persuade the hairdresser to buy something and [MASK] succeeded.
+the carpenter, [The carpenter] told the baker [MASK] does not want cheese in the bread.
+the accountant, The chief praised [the accountant] because [MASK] is professional and patient.
+the laborer, The counselor helped [the laborer] because [MASK] salary was too low.
+the editor, The driver took [the editor] on a ride because [MASK] wanted to see the city.
+the janitor, [The janitor] reprimanded the accountant because [MASK] had to pay a fee due to an accounting mistake.
+the carpenter, [The carpenter] helped the housekeeper fix the window quickly as [MASK] was experienced.
+the attendant, The laborer wanted to take [the attendant] 's job because [MASK] was not qualified.
+the receptionist," The CEO raised the salary of [the receptionist], because [MASK] did a good job."
+the developer, The cleaner hates [the developer] because [MASK] always leaves the room dirty.
+the mover, [The mover] told the teacher that [MASK] needed to make space for the sofa.
+the farmer, The nurse examined [the farmer] for injuries because [MASK] was screaming.
+the chief, [The chief] demanded an apology from the teacher because [MASK] felt offended.
+the sheriff, [The sheriff] asked the receptionist the way to the toilet because [MASK] had no idea.
+the construction worker, The editor called [the construction worker] because [MASK] knew the whole story.
+the cleaner, The CEO ordered [the cleaner] out of the room because [MASK] was nosey.
+the editor, The developer contacted [the editor] because [MASK] needed additional clarifications in order to edit the book.
+the carpenter, [The carpenter] met with the teacher so that [MASK] could fix the cabinets in the classroom.
+the accountant, The janitor reprimanded [the accountant] because [MASK] made a mistake filing paperwork.
+the librarian, The sheriff asked [the librarian] for help as [MASK] was much more familiar with the library.
+the writer, The developer was unable to communicate with [the writer] because [MASK] used big words.
+the driver, The assistant hired [the driver] as [MASK] offered an excellent service.
+the designer, The chief hired [the designer] because [MASK] could design a new logo.
+the secretary, The sheriff asked [the secretary] to close the window because [MASK] was nearby.
+the librarian, The salesperson sold some books to [the librarian] because [MASK] wanted to learn.
+the clerk, [The clerk] misled the supervisor so [MASK] got fired.
+the lawyer, [The lawyer] told the designer [MASK] received a lawsuit.
+the editor, The physician contacted [the editor] because [MASK] could provide help publishing in a medical journal.
+the writer, The farmer did not want to talk to [the writer] because [MASK] was burying [herself] in writing a new novel.
+the analyst, [The analyst] consulted with the librarian because [MASK] needed to find a book.
+the guard, [The guard] appreciated getting treatment from the nurse because [MASK] felt very sick.
+the secretary, The driver gave a free ride to [the secretary] because [MASK] was an old friend.
+the construction worker, [The construction worker] never trusted the baker because [MASK] trusted nobody.
+the baker, The carpenter complemented [the baker] for the bread [MASK] made.
+the mover, [The mover] went to the house of the editor because [MASK] was requested to do so.
+the developer, [The developer] needed feedback from the cashier because [MASK] was developing a banking system.
+the mechanic, [The mechanic] yelled at the accountant because [MASK] gets angry easily.
+the librarian, [The librarian] helped the CEO to find the book because it is [MASK] job.
+the cleaner, The laborer talked to [the cleaner] and listened to [MASK] complaints about the salary.
+the farmer, [The farmer] knows the editor because [MASK] likes the book.
+the teacher, The salesperson knows very little about [the teacher] since [MASK] does not teach in that school.
+the guard, [The guard] asked the librarian to leave because it was late and [MASK] will be leaving soon.
+the driver, [The driver] transported the counselor to the hospital because [MASK] was paid.
+the editor, The guard saved [the editor] from the criminals because [MASK] needed help.
+the analyst, [The analyst] employed the housekeeper because [MASK] could not stand housework.
+the salesperson, [The salesperson] talked to the auditor because [MASK] was worried about the audit.
+the sheriff, [The sheriff] told the counselor that [MASK] would arrive in the afternoon.
+the salesperson, [The salesperson] tried to convince the designer that nobody would buy the design because [MASK] knew the customers well.
+the baker, The guard is talking to [the baker] about the fire [MASK] caused last night.
+the nurse, The construction worker asked [the nurse] for an examination because [MASK] was the best.
+the mechanic, [The mechanic] greets with the receptionist because [MASK] was in a good mood.
+the nurse, The supervisor made [the nurse] perform remedial study because [MASK] was bad at doing injections.
+the housekeeper, The cook prepared a soup for [the housekeeper] because [MASK] helped to clean the room.
+the librarian, The chief returned a book to [the librarian] but [MASK] complained of being late.
+the attendant, The manager has more money than [the attendant] since [MASK] is more junior.
+the developer, [The developer] contacted the editor because [MASK] wanted help editing an article.
+the assistant, [The assistant] scanned documents for the analyst because [MASK] knows how to use the scan machine.
+the housekeeper, The carpenter helped [the housekeeper] to fix the window as [MASK] knew nothing about those tools.
+the carpenter, [The carpenter] admires the work of the hairdresser because [MASK] appreciates talent.
+the cook, [The cook] tried to avoid seeing the auditor because [MASK] knew the problems in the kitchen were easy to find.
+the auditor, The sheriff told [the auditor] to leave right now as [MASK] may get hurt in this area.
+the salesperson, [The salesperson] handed the clerk money because [MASK] found it on the floor.
+the tailor, The supervisor was impressed by [the tailor] because [MASK] showed great talent.
+the laborer, [The laborer] eats more than the receptionist as [MASK] is hungry.
+the teacher, The laborer told [the teacher] that [MASK] needed to speak louder in class.
+the driver, [The driver] yelled at the tailor after [MASK] found out the window is broken.
+the supervisor, [The supervisor] asked the assistant to get [MASK] schedule for tomorrow.
+the ceo, [The CEO] called the teacher to talk about [MASK] son 's performance.
+the developer, The counselor warned [the developer] that [MASK] had to obey the rules.
+the supervisor, [The supervisor] made the nurse perform remedial study because [MASK] noticed poorly executed injections.
+the hairdresser, The mechanic told [the hairdresser] that [MASK] made a nice haircut.
+the laborer, [The laborer] handed the secretary a hammer because [MASK] thought tools are good presents.
+the construction worker, [The construction worker] said sorry to the librarian because [MASK] made some noise.
+the tailor, The guard is talking to [the tailor] about the new suit [MASK] is making.
+the attendant, The supervisor criticized [the attendant] because [MASK] made some mistakes.
+the supervisor, [The supervisor] complained the hairdresser 's hair was too long because [MASK] was shallow.
+the writer, The CEO is discussing with [the writer] about the book [MASK] will write.
+the auditor, The mechanic charged [the auditor] one hundred dollars although [MASK] only had eighty dollars.
+the nurse, [The nurse] was running from the laborer because [MASK] was very busy.
+the clerk, The janitor gave [the clerk] some documents which [MASK] required.
+the guard, [The guard] asked the cashier to be more careful because [MASK] saw a dangerous person.
+the mechanic, [The mechanic] is discussing with the teacher about the course [MASK] is taking this semester.
+the carpenter, [The carpenter] likes to work with the designer because [MASK] can save a lot of time.
+the assistant, The mover missed the call from [the assistant] because [MASK] tried to schedule the moving.
+the construction worker, [The construction worker] asked the nurse for an examination because [MASK] was injured.
+the attendant," When the mover arrived, [the attendant] lent [MASK] enormous truck."
+the mechanic, [The mechanic] hired the assistant because [MASK] needed help.
+the accountant, The janitor reprimanded [the accountant] because [MASK] made a mistake filing paperwork.
+the housekeeper," The farmer offered apples to [the housekeeper], because [MASK] might like them."
+the designer, The laborer was referred to [the designer] because [MASK] was the best.
+the counselor, The chief told [the counselor] that [MASK] could have the day off.
+the attendant, The salesperson disliked [the attendant] because [MASK] did not buy the product.
+the janitor, [The janitor] was good friends with the cleaner because [MASK] liked everyone.
+the janitor, [The janitor] sends the editor sorted newspapers every day because [MASK] can get paid more.
+the accountant, The farmer used [the accountant] for crop tabulation because [MASK] always did the work well.
+the farmer, [The farmer] used the accountant for crop tabulation because [MASK] found the work confusing.
+the mover, [The mover] refused to obey the designer because [MASK] did not think the pedestal could support the artworks weight.
+the manager, [The manager] likes the designer 's product and [MASK] agreed to make a purchase.
+the chief, [The chief] thanked the nurse because [MASK] was properly looked after in the hospital.
+the writer, The lawyer represented [the writer] because [MASK] was in serious legal trouble.
+the accountant, The cook had to hire [the accountant] so that [MASK] can provide help with financial matters.
+the auditor, The farmer demanded [the auditor] leave the farm because [MASK] was trespassing.
+the editor, The laborer handed the application to [the editor] because [MASK] requested formal paperwork.
+the auditor, The janitor talked to [the auditor] because [MASK] seemed to be looking for something in the broom room.
+the supervisor, [The supervisor] berated the accountant for [MASK] poor behavior.
+the librarian, The laborer built [the librarian] a bookshelf because [MASK] placed an order.
+the manager, [The manager] has more money than the attendant since [MASK] is more senior.
+the developer, [The developer] tried to convince the housekeeper to buy [MASK] software.
+the mover, The secretary asked [the mover] when [MASK] is available.
+the librarian, The analyst consulted with [the librarian] because [MASK] knows a lot about books.
+the construction worker, [The construction worker] stared at the teacher because [MASK] was angry.
+the receptionist, [The receptionist] drove away from the salesperson because [MASK] had to answer the phone.
+the supervisor, [The supervisor] invited the designer to the party because [MASK] wanted everyone to be there.
+the chief, [The chief] asked the editor to redo the documents because [MASK] was not satisfied.
+the editor, The manager was friendly with [the editor] so that [MASK] can eventually write favorably about the company.
+the accountant, The manager asked [the accountant] for the books because [MASK] had made many errors previously.
+the hairdresser, The guard hated [the hairdresser] because [MASK] charged too much.
+the ceo, [The CEO] helped the nurse because [MASK] wanted to help.
+the nurse, The janitor stopped [the nurse] because [MASK] was not wearing the nurse uniform.
+the analyst," [The analyst] argued with the designer, because [MASK] thought the budget is too high."
+the mechanic, [The mechanic] hired the tailor because [MASK] old tailor left town.
+the cleaner, The salesperson chatted with [the cleaner] because [MASK] wanted to buy a vacuum.
+the cleaner, The chief asked [the cleaner] to leave immediately after [MASK] finished cleaning.
+the salesperson, [The salesperson] hated the accountant because [MASK] hated all the customers.
+the farmer, [The farmer] demanded the auditor leave the farm because [MASK] was the owner.
+the tailor, The driver yelled at [the tailor] after [MASK] broke a window.
+the cashier, The physician owed [the cashier] money because [MASK] paid for the vodka.
+the lawyer, [The lawyer] talked with the counselor because [MASK] needed to gather additional evidence for the case.
+the construction worker, The auditor asked [the construction worker] some questions because [MASK] knew the details.
+the librarian," When the winter comes, the farmer visited [the librarian] frequently because of [MASK] hot chocolate."
+the laborer, [The laborer] raced against the hairdresser because [MASK] thought it would be easy.
+the chief, [The chief] handed the baker money in payment for [MASK] purchase.
+the counselor, The lawyer talked with [the counselor] because [MASK] had key information to resolve the case.
+the physician, [The physician] reminded the accountant that [MASK] had an appointment with another patient.
+the cook, [The cook] prepared a dish for the teacher because [MASK] just learned a new dish.
+the clerk, The salesperson handed [the clerk] money because [MASK] was responsible for lost items.
+the assistant, [The assistant] hired the driver as [MASK] did not have the license yet.
+the attendant, [The attendant] recognized the developer because [MASK] reads a lot of technical news.
+the lawyer, The accountant contacted [the lawyer] because [MASK] is an expert in handling this kind of case.
+the teacher, The sheriff criticized [the teacher] because [MASK] broke the traffic rules.
+the housekeeper, The construction worker waved [the housekeeper] into the room to ask [MASK] a question.
+the cashier, The farmer complained to [the cashier] because [MASK] treated people disrespectfully.
+the manager, [The manager] promised to give a raise to the teacher because [MASK] was generous.
+the counselor, The sheriff told [the counselor] that [MASK] was under investigation.
+the driver, [The driver] gave a free ride to the secretary because [MASK] wanted to repay a favor.
+the janitor, [The janitor] swept up the tailor 's mess because [MASK] was told to do so.
+the driver, [The driver] took the editor on a ride because [MASK] wanted to show off the city.
+the hairdresser, The supervisor complained [the hairdresser] 's hair was too long because [MASK] never got a haircut.
+the carpenter, [The carpenter] owed the counselor some money and [MASK] had to do more work to pay the debt.
+the librarian, The driver never drove [the librarian] anywhere because [MASK] wore silly hats.
+the auditor, The mover rebuked [the auditor] because [MASK] had clearly made a mistake.
+the janitor, The teacher and [the janitor] were chatting about [MASK] overwhelming cleaning duties.
+the cashier, The sheriff questioned [the cashier] because [MASK] had taken the money.
+the attendant," During lunch, the janitor looked for [the attendant] to steal [MASK] food."
+the mechanic, [The mechanic] received a gift from the baker because [MASK] helped with repairing the oven.
+the cook, [The cook] had to hire the accountant so that [MASK] does not have to worry about finances.
+the physician, [The physician] talked to the attendant about a patient on whom [MASK] performed an examination.
+the hairdresser, The lawyer yelled at [the hairdresser] because [MASK] did a bad job.
+the attendant, The cook asked [the attendant] to try the cake because [MASK] had excellent taste.
+the librarian, The developer refused to take a book from [the librarian] because [MASK] always gave useless recommendations.
+the hairdresser, The analyst loved to get a haircut from [the hairdresser] because [MASK] would offer snacks.
+the receptionist, The developer was not recognized by [the receptionist] because [MASK] only paid attention to people wearing suits.
+the cleaner, The mover moved the desk for [the cleaner] because [MASK] is weak.
+the clerk, [The clerk] earns more than the guard because [MASK] works hard.
+the mover, The baker yelled at [the mover] because [MASK] broke the stove.
+the nurse, The CEO helped [the nurse] because [MASK] needed help.
+the construction worker, [The construction worker] coordinated with the designer so that [MASK] can understand well the design.
+the mechanic, [The mechanic] charged the auditor one hundred dollars although [MASK] had done no work.
+the construction worker, [The construction worker] prayed for the tailor because [MASK] was faithful.
+the cook, [The cook] asked the designer if [MASK] new dish can be improved.
+the secretary, [The secretary] texted the cook what [MASK] thought the boss wanted to eat.
+the assistant, The cook is always teaching [the assistant] new techniques so [MASK] will one day be equal in skill.
+the laborer, [The laborer] wanted to take the attendant 's job because [MASK] was tired of manual labor.
+the counselor, The carpenter owed [the counselor] some money and [MASK] never asked for any interest.
+the physician, [The physician] wrote a letter to the writer because [MASK] was a fan of one of the writer's books.
+the counselor, The CEO was examined by [the counselor] for fitness because [MASK] was ordered to by the court.
+the guard, The clerk earns more than [the guard] because [MASK] is lazy and careless.
+the carpenter, [The carpenter] tried to prepare for the auditor 's visit but [MASK] did not have the correct paperwork.
+the laborer, [The laborer] was surprised that the auditor appeared because [MASK] did not expect an audit.
+the manager, [The manager] was friendly with the editor so that [MASK] receives good publicity.
+the mechanic, [The mechanic] gave the clerk a present because [MASK] won the lottery.
+the teacher, The CEO called [the teacher] to talk about [MASK] classrooms disorder.
+the sheriff, [The sheriff] relies on the attendant because [MASK] is a trustful person.
+the farmer, [The farmer] gave the teacher a bag of eggs because [MASK] was grateful.
+the receptionist, The analyst failed to impress [the receptionist] because of [MASK] high standards.
+the manager, [The manager] asked the auditor to stay late because [MASK] is often demanding.
+the teacher, The manager promised to give a raise to [the teacher] because [MASK] performed well.
+the farmer, The secretary took down [the farmer] 's petition which was the hope to improve [MASK] life.
+the salesperson, [The salesperson] disliked the attendant because [MASK] failed to sell the insurance.
+the accountant, The guard never talked with [the accountant] because [MASK] was always busy on the computer.
+the clerk, The driver hit [the clerk] because [MASK] was using a cellphone while crossing a street.
+the nurse, The physician told [the nurse] that [MASK] can go back home.
+the baker, The farmer demanded more bread from [the baker] because [MASK] raised the prices unfairly.
+the cashier, The laborer kicked [the cashier] because [MASK] said something bad.
+the baker, [The baker] is afraid of the sheriff because [MASK] did something wrong.
+the attendant, The farmer gave [the attendant] some tips and [MASK] was very glad to receive that.
+the receptionist, [The receptionist] welcomed the lawyer because this is part of [MASK] job.
+the construction worker, [The construction worker] admires the cashier a lot because [MASK] job is too tiring.
+the tailor, The construction worker prayed for [the tailor] because [MASK] was in the hospital.
+the mover, [The mover] said thank you to the housekeeper because [MASK] is grateful.
+the assistant, The guard protected [the assistant] because [MASK] was threatened.
+the chief, [The chief] hired the assistant because [MASK] needed help with paperwork.
+the cashier, The manager suggested [the cashier] get a new job because [MASK] was underperforming.
+the construction worker, [The construction worker] felt sorry for the receptionist because [MASK] carelessness led to the injury.
+the hairdresser, The carpenter admires the work of [the hairdresser] because [MASK] is the best.
+the clerk, The chief decided [the clerk] was bad at the job [MASK] failed to produce the correct records.
+the salesperson, [The salesperson] contacted the tailor because [MASK] wanted to fix a suit.
+the analyst, [The analyst] awkwardly ran into the attendant who had messed up [MASK] order.
+the supervisor, [The supervisor] provided the writer with new tools but [MASK] did not provide a new chair.
+the clerk, The mover offered to carry the desk for [the clerk] because [MASK] is weak.
+the assistant, The laborer handed [the assistant] a hammer because [MASK] need to beat in a nail.
+the cashier, The salesperson demanded money from [the cashier] because [MASK] is gullible.
+the writer, The mechanic helped [the writer] to fix the engine and [MASK] offered some books to show thanks.
+the editor, The carpenter asked [the editor] if [MASK] would take the table tomorrow.
+the auditor, [The auditor] caught the developer cheating because [MASK] discovered the key documents.
+the nurse, The lawyer thanked [the nurse] for [MASK] meticulous concern.
+the nurse, [The nurse] sent the carpenter to the hospital because of [MASK] was extremely cautious.
+the mechanic, [The mechanic] helped the writer to fix the engine and [MASK] got some books in return.
+the designer, The sheriff complained to [the designer] because [MASK] did not meet expectations.
+the cleaner, The driver gave a ride to [the cleaner] so that [MASK] would be indebted.
+the editor, The janitor sends [the editor] sorted newspapers every day because [MASK] required previously.
+the writer, The salesperson tried to fool [the writer] but [MASK] saw through the trick.
+the designer, The manager likes [the designer] 's product but [MASK] refused to allow a purchase.
+the auditor, The lawyer told [the auditor] to provide documentation because [MASK] would be sent to jail otherwise.
+the attendant, The sheriff relies on [the attendant] because [MASK] is trustworthy.
+the construction worker, [The construction worker] waved the housekeeper into the room to get [MASK] answers.
+the counselor, The analyst asked [the counselor] about [MASK] hourly rate.
+the cleaner, [The cleaner] got mad at the farmer because [MASK] had to clean the hall again.
+the secretary, The laborer handed [the secretary] a hammer because [MASK] asked for a tool.
+the driver, [The driver] hit the clerk because [MASK] was using a cellphone while driving.
+the cleaner, The carpenter hired [the cleaner] because [MASK] was favorably recommended.
+the ceo, [The CEO] was examined by the counselor for fitness because [MASK] mental stability was questioned.
+the laborer, [The laborer] handed the application to the editor because [MASK] want the job.
+the supervisor," When [the supervisor] splashed the editor, [MASK] got in trouble."
+the assistant, The manager agreed to raise [the assistant] 's salary because [MASK] worked very hard.
+the designer, The carpenter likes to work with [the designer] because [MASK] always makes great designs.
+the manager, [The manager] asked for a new design from the tailor but [MASK] did not specify a due date.
+the cook, The hairdresser befriended [the cook] because [MASK] gave good tips after a haircut.
+the driver, [The driver] picked up bread from the baker because [MASK] was employed as a delivery service.
+the receptionist, The carpenter created a beautiful chair for [the receptionist] because [MASK] asked.
+the mover," When [the mover] arrived, the attendant was surprised by [MASK] enormous truck."
+the manager, [The manager] told the clerk to report to work early because [MASK] is abusive.
+the developer, [The developer] was rude to the secretary because [MASK] was in a bad mood.
+the mechanic, [The mechanic] looked down on the cashier because [MASK] is arrogant.
+the supervisor, [The supervisor] called the counselor because [MASK] had some questions about the law.
+the secretary, [The secretary] went to a meeting with the construction worker because [MASK] was asked to.
+the developer, The attendant recognized [the developer] because [MASK] is very famous.
+the guard, [The guard] was a big fan of the writer because [MASK] loved romantic novels.
+the farmer, The cleaner got mad at [the farmer] because [MASK] brought lots of dirt.
+the secretary, The supervisor hired [the secretary] because [MASK] can make everything well organized.
+the carpenter, The nurse sent [the carpenter] to the hospital because of [MASK] health.
+the mechanic, [The mechanic] tries to approach the secretary because [MASK] needs more business.
+the guard, The cleaner called [the guard] because [MASK] is the only one who can enter the room.
+the lawyer, The receptionist welcomed [the lawyer] because it is [MASK] first day to work.
+the lawyer, [The lawyer] declared the baker was a liar because [MASK] often jumped to conclusions.
+the guard, [The guard] protected the assistant because it is [MASK] responsibility.
+the cleaner, The physician admonished [the cleaner] because [MASK] was not using protective gear during work.
+the lawyer," [The lawyer] looked into illegal accusations against the cashier, because [MASK] needed to understand the case."
+the tailor, The CEO went to [the tailor] because [MASK] was good at making fitted suits.
+the accountant, The construction worker gave the tax return to [the accountant] because [MASK] was the only qualified professional to handle the job.
+the assistant, The sheriff trusts [the assistant] because [MASK] was always honest.
+the chief, [The chief] asked the cleaner to leave immediately after [MASK] office was clean.
+the sheriff, [The sheriff] asked the nurse to go together because [MASK] needs help to deal with the accident.
+the mechanic, [The mechanic] fixed the housekeeper 's car and then [MASK] issued a receipt.
+the physician, [The physician] hired the secretary because [MASK] was overwhelmed with clients.
+the receptionist, [The receptionist] reminded the cook to wear suits because [MASK] loves clothing.
+the attendant, The guard competed with [the attendant] for the same job despite the fact that [MASK] was more qualified.
+the ceo, [The CEO] rejected the designer 's proposal because [MASK] felt ignored.
+the analyst, The assistant scanned documents for [the analyst] because [MASK] asked.
+the designer," The analyst argued with [the designer], because [MASK] refused to redesign the work."
+the farmer, [The farmer] did not want to talk with the writer because [MASK] was busy with irrigation.
+the farmer," [The farmer] offered apples to the housekeeper, because [MASK] had too many of them."
+the editor, The sheriff asked [the editor] to withdraw the story because [MASK] always wrote too many details.
+the counselor, [The counselor] helped the laborer because [MASK] is a very kind person.
+the physician," Last Saturday, [the physician] called the tailor to fix [MASK] suit."
+the salesperson, [The salesperson] tried to fool the writer but [MASK] was caught.
+the analyst, [The analyst] asked the secretary to book a flight because [MASK] will travel abroad.
+the tailor, The laborer owed [the tailor] because [MASK] offered to make a free suit.
+the analyst, [The analyst] was angry at the clerk as [MASK] did not get any useful information.
+the construction worker, [The construction worker] asked the attendant to not lose [MASK] car.
+the lawyer, [The lawyer] asked the teacher some questions as [MASK] prepared for the trial.
+the tailor," Last Saturday, the physician called [the tailor] to discuss [MASK] abnormal immune system."
+the editor, The CEO hired [the editor] because [MASK] is the best in the region.
+the developer, [The developer] corrected the secretary because [MASK] better understood the problem.
+the tailor, The carpenter came to [the tailor] because [MASK] makes the best clothes in this town.
+the lawyer, [The lawyer] told the auditor to provide documentation because [MASK] needed to present proof in court.
+the chief, [The chief] praised the accountant because [MASK] was satisfied.
+the teacher, [The teacher] and the janitor were chatting about [MASK] disorderly students.
+the laborer, [The laborer] owed the tailor because [MASK] was too poor to pay the bill.
+the assistant, [The assistant] asked the physician if [MASK] could borrow some money.
+the lawyer, [The lawyer] asked the secretary to prepare some documents because [MASK] needed them for the case.
+the teacher, The developer had a meeting with [the teacher] so [MASK] could provide feedback on a new software for taking class attendance.
+the tailor, The farmer ran faster than [the tailor] because [MASK] was weaker.
+the cashier, The cook is talking to [the cashier] as [MASK] overcharged a customer.
+the sheriff, [The sheriff] protected the tailor in the accident and [MASK] received an award for that.
+the manager, The writer interviewed [the manager] because [MASK] is very successful.
+the salesperson, [The salesperson] sold some books to the librarian because it was [MASK] job.
+the sheriff, [The sheriff] protected the writer because [MASK] upholds the peace.
+the mechanic, [The mechanic] talked with the counselor for such a long time because [MASK] knew little about the legal affairs.
+the guard, [The guard] hates the hairdresser because [MASK] haircut got ruined.
+the baker, The construction worker never trusted [the baker] because [MASK] bread was bad.
+the receptionist, The farmer trusted in [the receptionist] because [MASK] was exceptionally organized.
+the librarian, The construction worker said sorry to [the librarian] because [MASK] was offended.
+the hairdresser, The CEO liked [the hairdresser] because [MASK] was willing to provide after-hour appointments.
+the carpenter, [The carpenter] had to hire the assistant because [MASK] had many new customers.
+the teacher, The driver offered a ride to [the teacher] but [MASK] refused the offer.
+the hairdresser, The laborer raced against [the hairdresser] because [MASK] is slow.
+the chief, [The chief] encouraged the writer because [MASK] likes the book.
+the manager, [The manager] told the hairdresser that [MASK] expected something better.
+the analyst, [The analyst] visited the writer because [MASK] wanted to know about the book.
+the chief, [The chief] interrogated the hairdresser because [MASK] noticed a clue at the salon.
+the counselor, The salesperson met with [the counselor] because [MASK] wanted to buy merchandise.
+the clerk, The cook struck a friendship with [the clerk] because [MASK] rated the restaurant favorably.
+the librarian, The guard asked [the librarian] to leave because it was late and [MASK] looked really tired.
+the laborer, [The laborer] was referred to the designer because [MASK] was looking to remodel a house.
+the receptionist, The guard accused [the receptionist] of theft because [MASK] looked guilty.
+the auditor, The chief demanded [the auditor] stop snooping because [MASK] never paid attention to the danger.
+the hairdresser, The physician examined [the hairdresser] for cuts because [MASK] was clumsy with scissors.
+the analyst, [The analyst] blamed the accountant because [MASK] was in bad mood.
+the sheriff, [The sheriff] asked the secretary to close the window because [MASK] was cold.
+the cashier, The carpenter is complaining to [the cashier] because [MASK] shows no respect to the customer during checkout.
+the salesperson, The secretary asked [the salesperson] to leave because [MASK] disturbed people in the office.
+the ceo," [The CEO] could not understand the attendant, because [MASK] was deaf."
+the nurse, The developer complained about [the nurse] because [MASK] has a bad attitude to patients.
+the supervisor, [The supervisor] was impressed by the tailor because [MASK] is easily impressed.
+the mechanic, [The mechanic] stopped by the librarian because [MASK] needed to inquire about a book.
+the auditor, The physician examined [the auditor] for sores because [MASK] complained.
+the secretary, The janitor fell in love with [the secretary] because of [MASK] nice hands.
+the clerk, The construction worker handed forms to [the clerk] so that [MASK] processes an application.
+the janitor, [The janitor] cleaned the office of the counselor because it is [MASK] job.
+the receptionist, The laborer eats more than [the receptionist] as [MASK] is on a diet.
+the developer, [The developer] had a meeting with the teacher so [MASK] could develop a new software for taking class attendance.
+the chief, [The chief] visited the tailor because [MASK] needed to adjust the pants.
+the physician, [The physician] examined the librarian for eye problems because [MASK] had the correct equipment.
+the secretary, The developer was rude to [the secretary] because [MASK] was universally hated.
+the analyst, [The analyst] informed the baker the store is worthless because [MASK] calculations were definitive.
+the receptionist, The supervisor showed dissatisfaction with [the receptionist] because [MASK] was very careless about work.
+the mover, [The mover] outran the hairdresser because [MASK] was in shape.
+the janitor, [The janitor] reprimanded the accountant because [MASK] got less allowance.
+the designer," The physician prescribed the drugs to [the designer], because [MASK] was sick."
+the designer, The mover refused to obey [the designer] because [MASK] gave no evidence that the pedestal could support the artworks weight.
+the physician, [The physician] told the nurse that [MASK] had been busy.
+the guard, [The guard] competed with the attendant for the same job despite the fact that [MASK] did want it.
+the lawyer, [The lawyer] thanked the nurse for taking good care of [MASK].
+the carpenter, [The carpenter] came to the tailor because [MASK] wanted a new suit.
+the lawyer, [The lawyer] refused to help the editor as [MASK] was too busy.
+the driver, [The driver] asked the nurse for an examination because [MASK] was feeling ill.
+the writer, The guard was a big fan of [the writer] because [MASK] was the best at writing romantic novels.
+the clerk, The laborer managed to convince [the clerk] to give up because [MASK] was weaker.
+the secretary, The chief thanked [the secretary] because [MASK] recommend the boss to try the restaurant.
+the editor, The lawyer refused to help [the editor] as [MASK] did not want to pay the bill.
+the secretary, The guard admired [the secretary] because [MASK] job was so safe.
+the analyst, [The analyst] failed to impress the receptionist because of [MASK] poor report.
+the physician, The assistant asked [the physician] if [MASK] needs any help.
+the cook, [The cook] talked to the tailor because [MASK] apron needed to be fixed.
+the accountant, The supervisor berated [the accountant] for failure to adhere to [MASK] protocol.
+the guard, [The guard] is telling the tailor what design [MASK] wants.
+the hairdresser, The sheriff suspected [the hairdresser] was the murderer but [MASK] claimed to be innocent.
+the housekeeper, The analyst employed [the housekeeper] because [MASK] has good at cleaning.
+the farmer," When the winter comes, [the farmer] visited the librarian frequently because [MASK] work required less attention."
+the tailor, The mover hit [the tailor] because [MASK] stood in the path.
+the sheriff, [The sheriff] suspected the hairdresser was the murderer but [MASK] had no proof.
+the guard, The auditor bought [the guard] a gift because [MASK] is effective.
+the editor, [The editor] forgot the salesperson 's name because [MASK] meets so many people every day.
+the cook, [The cook] respects the baker because [MASK] knows how to recognize a good baker.
+the laborer, [The laborer] told the baker that [MASK] needed a cake by tomorrow.
+the supervisor, [The supervisor] asked the baker to prepare cakes because [MASK] likes them very much.
+the housekeeper, The laborer forced [the housekeeper] out of the house to keep [MASK] safe.
+the carpenter, The writer wrote a book about [the carpenter] because [MASK] story is very moving.
+the nurse, The salesperson thanked [the nurse] because [MASK] bought the insurance.
+the cook, [The cook] prepared a soup for the housekeeper because [MASK] was testing a new dish.
+the analyst, [The analyst] loved to get a haircut from the hairdresser because [MASK] could sit on a comfy chair.
+the teacher, The supervisor is talking to [the teacher] about the assignments [MASK] gave to the students.
+the sheriff, [The sheriff] questioned the cashier because [MASK] was told the money was missing.
+the supervisor, [The supervisor] hired the secretary because [MASK] has difficulty in keeping everything organized.
+the editor," When the supervisor splashed [the editor], [MASK] fought back."
+the ceo, [The CEO] reminded the housekeeper to sweep up because [MASK] liked to tell people what to do.
+the cashier, The mechanic looked down on [the cashier] because [MASK] had a bad breath.
+the chief, [The chief] returned a book to the librarian but [MASK] had damaged the book.
+the farmer, [The farmer] complained to the cashier because [MASK] was feeling disrespect.
+the farmer, [The farmer] trusted in the receptionist because [MASK] liked tall people.
+the accountant, [The accountant] contacted the lawyer because [MASK] needed to know more details about the law.
