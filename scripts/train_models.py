@@ -93,11 +93,11 @@ class ModelTrainer:
                     per_device_eval_batch_size=self.per_device_eval_batch_size,
                     warmup_steps=self.warmup_steps,
                     weight_decay=self.weight_decay,
-                    save_steps=5000,
+                    save_steps=self.max_steps,
                     learning_rate=self.learning_rate,
                     evaluation_strategy="steps",
                     logging_dir=os.path.join(year_output_dir, 'logs'),
-                    logging_steps=2500,
+                    logging_steps=self.max_steps/2,
                     load_best_model_at_end=True,
                 )
                 if latest_checkpoint:
