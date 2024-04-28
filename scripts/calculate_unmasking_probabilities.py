@@ -52,10 +52,10 @@ class GenderBiasTester:
 
     def _run_single_test(self, model_dir, results_file_p0, results_file_unmasking):
         logging.info(f"Testing with model at {model_dir}")
-        device = torch.device("cpu")
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         tokenizer = AutoTokenizer.from_pretrained(model_dir)
         model = AutoModelForMaskedLM.from_pretrained(model_dir)
-        model.to(device)
+        model.to(self.device)
         model.eval()
         
         # Calculate P0 for target (original text) and prior (neutral text)
@@ -63,8 +63,8 @@ class GenderBiasTester:
         testcases = self.test_cases
         testcases['neutral_text'] = testcases.apply(lambda x: replace_job_with_mask(x['masked_text'], x['job']), axis=1)
         for _, row in tqdm(testcases.iterrows(), total=testcases.shape[0], desc='Calculating P0 values'):
-            probabilities_tgt = get_probabilities(row['masked_text'], tokenizer, model)
-            probabilities_prior = get_probabilities(row['neutral_text'], tokenizer, model)
+            probabilities_tgt = get_probabilities(row['masked_text'], tokenizer, model, self.device)
+            probabilities_prior = get_probabilities(row['neutral_text'], tokenizer, model, self.device)
             logging.info(row['neutral_text'])
             result = {
                 'job': row['job'],
@@ -81,7 +81,7 @@ class GenderBiasTester:
         for job in tqdm(unique_jobs, desc='Calculating unmasking probabilities'):
             template_unmasking = f"[MASK] is {job}"
             logging.info(template_unmasking)
-            probabilities_unmasking = get_probabilities(template_unmasking, tokenizer, model)
+            probabilities_unmasking = get_probabilities(template_unmasking, tokenizer, model, self.device)
             results_unmasking.append({
                 'job': job,
                 'probabilities': probabilities_unmasking
@@ -108,8 +108,9 @@ class GenderBiasTester:
             os.makedirs(directory)
             logging.info(f"Created directory: {directory}")
 
-def get_probabilities(text, tokenizer, model):
+def get_probabilities(text, tokenizer, model, device):
     inputs = tokenizer(text, return_tensors="pt", padding=True, truncation=True, max_length=512)
+    inputs = {key: val.to(device) for key, val in inputs.items()}
     mask_index = torch.where(inputs['input_ids'][0] == tokenizer.mask_token_id)[0]
     with torch.no_grad():
         logits = model(**inputs).logits
