@@ -1,4 +1,5 @@
 data/download.log
+data/logs
 data/processed/case_law/albert-base-v2/
 data/processed/ny_times/albert-base-v2/
 data/processed/case_law/bert-base-uncased/
@@ -13,3 +14,4 @@ models/case_law/bert-base-uncased/
 models/ny_times/bert-base-uncased/
 models/case_law/distilbert-base-uncased/
 models/ny_times/distilbert-base-uncased/
+results
