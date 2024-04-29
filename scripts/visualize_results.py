@@ -110,7 +110,6 @@ def load_job_normalized_data(data_sources, model_types, base_path="results"):
 
 
 def visualize_job_normalized_data(job_data, data_sources, model_types):
-    """Visualize the ensemble normalized 'she' probabilities grouped by job across data sources with correlation."""
     unique_jobs = set()
     for data in job_data.values():
         unique_jobs.update(data['job'].dropna().unique())
@@ -118,7 +117,9 @@ def visualize_job_normalized_data(job_data, data_sources, model_types):
     ensemble_averages = {source: {} for source in data_sources}
 
     for job in unique_jobs:
-        # Calculate the ensemble average for each job in each data source
+        job_fig, job_ax = plt.subplots(figsize=(12, 6))
+        all_ensemble_averages = []
+
         for source in data_sources:
             ensemble_averages[source][job] = []
             for decade in range(1900, 2011, 10):
@@ -128,30 +129,35 @@ def visualize_job_normalized_data(job_data, data_sources, model_types):
                     if model_data is not None:
                         job_decade_data = model_data[(model_data['job'] == job) & (model_data['decade'] == decade)]['normalized_she']
                         decade_averages.extend(job_decade_data.values)
-                # Calculate the mean of the normalized_she for this job and decade across all models
-                ensemble_averages[source][job].append(np.nanmean(decade_averages))
-        
-    # Plot the ensemble averages for each job and calculate correlations
-    for job in unique_jobs:
-        plt.figure(figsize=(12, 6))
-        data_lines = []
-        for idx, source in enumerate(data_sources):
-            if job in ensemble_averages[source]:
-                line, = plt.plot(range(1900, 2011, 10), ensemble_averages[source][job], marker='o', label=f'Ensemble - {source}')
-                data_lines.append(line.get_ydata())
-        
-        if len(data_lines) == 2:  # Check if we have two lines to compare
-            correlation_matrix = np.corrcoef(data_lines[0], data_lines[1])
-            correlation = correlation_matrix[0, 1]  # Get the correlation value
-            plt.title(f'Ensemble Normalized "She" Probabilities for {job}\nCorrelation: {correlation:.2f}')
+                ensemble_average = np.nanmean(decade_averages)
+                ensemble_averages[source][job].append(ensemble_average)
+            ensemble_line, = job_ax.plot(range(1900, 2011, 10), ensemble_averages[source][job], marker='o', label=f'Ensemble - {source}')
+            all_ensemble_averages.append(ensemble_line.get_ydata())
+
+        # Check if we have at least two ensembles to compare
+        if len(all_ensemble_averages) > 1:
+            clean_values = [list(filter(lambda x: not np.isnan(x), ensemble)) for ensemble in all_ensemble_averages]
+            # Only compute correlation if there are no NaNs
+            if clean_values and all(clean_values):
+                correlation_matrix = np.corrcoef(clean_values)
+                correlation = correlation_matrix[0, 1]  # Get the correlation value
+                correlation_text = f'\nCorrelation: {correlation:.2f}'
+            else:
+                correlation_text = '\nInsufficient data for correlation'
         else:
-            plt.title(f'Ensemble Normalized "She" Probabilities for {job}')
-        
-        plt.xlabel('Decade')
-        plt.ylabel('Ensemble Normalized Probability of "She"')
-        plt.legend()
-        plt.grid(True)
-        st.pyplot()
+            correlation_text = ''
+
+        avg_ensemble = np.nanmean(all_ensemble_averages, axis=0)
+        job_ax.plot(range(1900, 2011, 10), avg_ensemble, marker='o', linestyle='--', color='purple', label='Average Ensemble')
+
+        job_ax.set_title(f'Ensemble Normalized "She" Probabilities for {job}{correlation_text}')
+        job_ax.set_xlabel('Decade')
+        job_ax.set_ylabel('Ensemble Normalized Probability of "She"')
+        job_ax.legend()
+        job_ax.grid(True)
+        st.pyplot(job_fig)
+
+
 
 
 
@@ -225,9 +231,14 @@ def plot_p0_trends_multiple(aggregated_data, data_sources, model_types):
 
 from itertools import combinations
 
+from sklearn.cross_decomposition import CCA
+import numpy as np
+import matplotlib.pyplot as plt
+
 def plot_normalized_she_trends(normalized_data, ensemble_data, model_types, data_sources):
     """Plot the average normalized_she values over decades for all model types and the ensemble for each data source."""
     colors = ['blue', 'green', 'red', 'magenta', 'cyan', 'orange']  # More colors for additional lines
+    decades = np.array(range(1900, 2011, 10))
 
     for source in data_sources:
         plt.figure(figsize=(10, 5))
@@ -235,23 +246,27 @@ def plot_normalized_she_trends(normalized_data, ensemble_data, model_types, data
         model_data_lists = {}
 
         for model in model_types:
-            model_data = [normalized_data[source][model].get(decade, np.nan) for decade in range(1900, 2011, 10)]
+            model_data = np.array([normalized_data[source][model].get(decade, np.nan) for decade in decades])
             model_data_lists[model] = model_data
-            plt.plot(range(1900, 2011, 10), model_data, marker='o', label=f'{model}')
+            plt.plot(decades, model_data, marker='o', label=f'{model}')
 
-        # Calculate and display correlations for all pairs
+        # Calculate and display Canonical Correlation Analysis for all pairs
         correlations = []
         for (model1, data1), (model2, data2) in combinations(model_data_lists.items(), 2):
-            clean_data = [(x, y) for x, y in zip(data1, data2) if not (np.isnan(x) or np.isnan(y))]
-            if clean_data:  # Proceed if there are pairs to compare
-                x_values, y_values = zip(*clean_data)
-                correlation_matrix = np.corrcoef(x_values, y_values)
-                correlation = correlation_matrix[0, 1]  # Get the correlation value
+            valid_indices = ~np.isnan(data1) & ~np.isnan(data2)
+            if valid_indices.any():  # Proceed if there are non-NaN pairs to compare
+                X = data1[valid_indices].reshape(-1, 1)
+                Y = data2[valid_indices].reshape(-1, 1)
+                cca = CCA(n_components=1)
+                cca.fit(X, Y)
+                X_c, Y_c = cca.transform(X, Y)
+                correlation = np.corrcoef(X_c.T, Y_c.T)[0, 1]
                 correlations.append(f'Correlation {model1}/{model2}: {correlation:.2f}')
 
         # Plot ensemble average
-        ensemble_averages = [ensemble_data[source].get(decade, np.nan) for decade in range(1900, 2011, 10)]
-        plt.plot(range(1900, 2011, 10), ensemble_averages, marker='o', linestyle='--', color='black', label='Ensemble')
+        ensemble_averages = np.array([ensemble_data[source].get(decade, np.nan) for decade in decades])
+        valid_indices = ~np.isnan(ensemble_averages)
+        plt.plot(decades[valid_indices], ensemble_averages[valid_indices], marker='o', linestyle='--', color='black', label='Ensemble')
 
         # Set plot title and display correlations
         correlation_text = "\n".join(correlations)
@@ -264,34 +279,121 @@ def plot_normalized_she_trends(normalized_data, ensemble_data, model_types, data
 
 
 
+def compute_cohens_d(mean1, mean2, std1, std2, n1, n2):
+    pooled_std = np.sqrt(((n1 - 1) * std1**2 + (n2 - 1) * std2**2) / (n1 + n2 - 2))
+    cohens_d = (mean1 - mean2) / pooled_std
+    return cohens_d
+
+def get_cohens_d_for_decade(source, model_types, decade, base_path):
+    he_means, she_means, he_stds, she_stds, n_he, n_she = [], [], [], [], [], []
+
+    for model in model_types:
+        file_path = os.path.join(base_path, source, model, 'aggregated_results', f"aggregated_{decade}_p0.csv")
+        if os.path.exists(file_path):
+            df = pd.read_csv(file_path)
+            if 'P0_he' in df.columns and 'P0_she' in df.columns:
+                he_values = np.log(df['P0_he'].replace(0, np.nan).dropna() + 0.0001)
+                she_values = np.log(df['P0_she'].replace(0, np.nan).dropna() + 0.0001)
+
+                if not he_values.empty and not she_values.empty:
+                    he_means.append(he_values.mean())
+                    she_means.append(she_values.mean())
+                    he_stds.append(he_values.std())
+                    she_stds.append(she_values.std())
+                    n_he.append(len(he_values))
+                    n_she.append(len(she_values))
+
+    if he_means and she_means:
+        overall_he_mean = np.nanmean(he_means)
+        overall_she_mean = np.nanmean(she_means)
+        overall_he_std = np.nanmean(he_stds)
+        overall_she_std = np.nanmean(she_stds)
+        total_n_he = sum(n_he)
+        total_n_she = sum(n_she)
+        cohens_d = compute_cohens_d(overall_he_mean, overall_she_mean, overall_he_std, overall_she_std, total_n_he, total_n_she)
+        return cohens_d
+    return np.nan
+
+def plot_cohens_d_trends(data_sources, model_types, base_path="results"):
+    decades = np.array(range(1900, 2011, 10))
+
+    # Plotting across data sources with correlation and average line
+    plt.figure(figsize=(12, 6))
+    all_data_sources_cohens_d = []
+
+    for source in data_sources:
+        cohens_ds = [get_cohens_d_for_decade(source, model_types, decade, base_path) for decade in decades]
+        all_data_sources_cohens_d.append(cohens_ds)
+        plt.plot(decades, cohens_ds, marker='o', label=f'Cohen’s d for {source}')
+
+    # Calculate and plot average Cohen's d across all data sources
+    all_data_sources_cohens_d = np.array(all_data_sources_cohens_d, dtype=np.float64)
+    valid_mask = ~np.isnan(all_data_sources_cohens_d).any(axis=0)
+    average_cohens_d = np.nanmean(all_data_sources_cohens_d[:, valid_mask], axis=0)
+    plt.plot(decades[valid_mask], average_cohens_d, marker='o', linestyle='--', color='black', label='Average Cohen’s d')
+
+    # Calculate and display correlation between data sources if there are exactly two
+    if len(data_sources) == 2:
+        correlations = np.corrcoef(all_data_sources_cohens_d[0, valid_mask], all_data_sources_cohens_d[1, valid_mask])[0, 1]
+        plt.title(f'Cohen’s d Across Data Sources\nCorrelation: {correlations:.2f}')
+    else:
+        plt.title('Cohen’s d Across Data Sources')
+
+    plt.xlabel('Decade')
+    plt.ylabel("Cohen's d (Gender Bias Magnitude)")
+    plt.legend()
+    plt.grid(True)
+    st.pyplot()
+
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.cross_decomposition import CCA
 
 def plot_ensemble_comparison(ensemble_data, data_sources):
     plt.figure(figsize=(10, 5))
-    ensemble_values = []
-    for source in data_sources:
-        ensemble_averages = [ensemble_data[source].get(decade, np.nan) for decade in range(1900, 2011, 10)]
-        ensemble_values.append(ensemble_averages)
-        plt.plot(range(1900, 2011, 10), ensemble_averages, marker='o', label=f'Ensemble - {source}')
+    all_ensemble_averages = []
+    decades = np.array(range(1900, 2011, 10))
 
-    # Calculate correlation if both data sources have values
-    if len(ensemble_values) == 2:
-        # Flatten the list and remove pairs where at least one is NaN
-        clean_values = [(x, y) for x, y in zip(*ensemble_values) if not (np.isnan(x) or np.isnan(y))]
-        if clean_values:  # Proceed if there are pairs to compare
-            x_values, y_values = zip(*clean_values)
-            correlation_matrix = np.corrcoef(x_values, y_values)
-            correlation = correlation_matrix[0, 1]  # Get the correlation value
-            plt.title(f'Ensemble Comparison Across Data Sources\nCorrelation: {correlation:.2f}')
-        else:
-            plt.title('Ensemble Comparison Across Data Sources\nNo overlap for correlation')
+    # Plot individual ensembles
+    for source in data_sources:
+        ensemble_averages = [ensemble_data[source].get(decade, np.nan) for decade in decades]
+        all_ensemble_averages.append(ensemble_averages)
+        plt.plot(decades, ensemble_averages, marker='o', label=f'Ensemble - {source}')
+
+    # Ensure there are no NaN values in the data for CCA
+    clean_data = np.array(all_ensemble_averages, dtype=float).T
+    valid_indices = ~np.isnan(clean_data).any(axis=1)
+
+    if clean_data.shape[0] > 1 and len(data_sources) == 2:  # Check there's enough data and exactly two data sources
+        # Prepare data for CCA
+        X = clean_data[valid_indices, 0].reshape(-1, 1)
+        Y = clean_data[valid_indices, 1].reshape(-1, 1)
+
+        # Perform Canonical Correlation Analysis
+        cca = CCA(n_components=1)
+        cca.fit(X, Y)
+        X_c, Y_c = cca.transform(X, Y)
+
+        # Calculate correlation of the transformed components
+        correlation = np.corrcoef(X_c.T, Y_c.T)[0, 1]
+
+        plt.title(f'Ensemble Comparison Across Data Sources\nCorrelation: {correlation:.2f}')
     else:
-        plt.title('Ensemble Comparison Across Data Sources')
+        plt.title('Ensemble Comparison Across Data Sources\nNot enough data for CCA')
+
+    # Calculate the average of the ensembles and plot it if possible
+    if np.any(valid_indices):
+        avg_ensemble = np.nanmean(clean_data[valid_indices], axis=1)
+        plt.plot(decades[valid_indices], avg_ensemble, marker='o', linestyle='--', color='black', label='Average Ensemble')
 
     plt.xlabel('Decade')
     plt.ylabel('Average Normalized She')
     plt.grid(True)
     plt.legend()
     st.pyplot()
+
 
 
 
@@ -303,7 +405,7 @@ def main():
 
     data_sources = ['case_law', 'ny_times']  # List of all data sources
     model_types = ['bert-base-uncased', 'distilbert-base-uncased', 'albert-base-v2']
-    graph_options = ["P0_she Ratio Trend", "Normalized She Trend", "Jobs She Trend", "Ensemble Comparison"]
+    graph_options = ["P0_she Ratio Trend", "Normalized She Trend", "Jobs She Trend", "Cohens d", "Ensemble Comparison"]
 
     selected_data_sources = st.sidebar.multiselect("Select Data Sources", data_sources, default=data_sources)
     selected_model_types = st.sidebar.multiselect("Select Model Types", model_types, default=model_types)
@@ -318,6 +420,9 @@ def main():
     if "Jobs She Trend" == selected_graphs:
         job_data = load_job_normalized_data(selected_data_sources, selected_model_types)
         visualize_job_normalized_data(job_data, selected_data_sources, selected_model_types)
+
+    if "Cohens d" == selected_graphs:
+        plot_cohens_d_trends(data_sources, model_types, base_path="results")
 
 
     if "Normalized She Trend" == selected_graphs:
