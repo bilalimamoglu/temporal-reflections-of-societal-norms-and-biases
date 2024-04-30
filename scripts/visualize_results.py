@@ -497,6 +497,58 @@ def calculate_correlations_with_occupation(job_data, data_sources, model_types):
     return correlation_df
 
 
+def calculate_ensemble_correlations(job_data, data_sources, model_types):
+    # Ensure only 'case_law' and 'ny_times' are compared
+    if 'case_law' not in data_sources or 'ny_times' not in data_sources:
+        return pd.DataFrame()  # Return empty dataframe if either source is missing
+
+    unique_jobs = set()
+    for data in job_data.values():
+        unique_jobs.update(data['job'].dropna().unique())
+
+    ensemble_averages = {source: {} for source in data_sources}
+    correlation_results = []
+
+    for job in unique_jobs:
+        for source in data_sources:
+            ensemble_averages[source][job] = []
+
+            for decade in range(1900, 2011, 10):
+                decade_averages = []
+                for model in model_types:
+                    model_data = job_data.get((source, model))
+                    if model_data is not None:
+                        job_decade_data = model_data[(model_data['job'] == job) & (model_data['decade'] == decade)]['normalized_she']
+                        decade_averages.extend(job_decade_data.values)
+                
+                if decade_averages:
+                    ensemble_averages[source][job].append(np.nanmean(decade_averages))
+                else:
+                    ensemble_averages[source][job].append(np.nan)
+
+        # Extract ensemble data for both sources for this job
+        case_law_data = np.array(ensemble_averages['case_law'][job])
+        ny_times_data = np.array(ensemble_averages['ny_times'][job])
+        valid_indices = ~np.isnan(case_law_data) & ~np.isnan(ny_times_data)
+
+        if valid_indices.any():
+            correlation = np.corrcoef(case_law_data[valid_indices], ny_times_data[valid_indices])[0, 1]
+        else:
+            correlation = None  # Use None for no data or invalid correlation due to insufficient data
+
+        # Store results in a list for later conversion to DataFrame
+        correlation_results.append({
+            'Job': job,
+            'Correlation between Case Law and NY Times': correlation
+        })
+
+    # Convert list to DataFrame
+    correlation_df = pd.DataFrame(correlation_results)
+    correlation_df = correlation_df.dropna().sort_values('Correlation between Case Law and NY Times', ascending=False)
+
+    return correlation_df
+
+
 
 def plot_ensemble_comparison(ensemble_data, data_sources):
     plt.figure(figsize=(10, 5))
@@ -540,6 +592,8 @@ def plot_ensemble_comparison(ensemble_data, data_sources):
     plt.grid(True)
     plt.legend()
     st.pyplot()
+
+
 
 
 
@@ -591,8 +645,10 @@ def main():
 
     if "Calculate Occupation Correlations" == selected_graphs:
         job_data = load_job_normalized_data(selected_data_sources, selected_model_types)
-        df_correlations = calculate_correlations_with_occupation(job_data, selected_data_sources, selected_model_types)
-        st.write(df_correlations)
+        df_occupation_correlations = calculate_correlations_with_occupation(job_data, selected_data_sources, selected_model_types)
+        st.write(df_occupation_correlations)
+        df_ensemble_correlations = calculate_ensemble_correlations(job_data, selected_data_sources, selected_model_types)
+        st.write(df_ensemble_correlations)
         
 
 
