@@ -44,33 +44,45 @@ def load_raw_data(year, run, model_name, data_source, base_path="results"):
         return pd.DataFrame()
 
 def load_normalized_data(model_types, data_sources, base_path="results"):
-    """Aggregate normalized_she data for each decade for all model types and data sources."""
     normalized_data = {source: {model: {} for model in model_types} for source in data_sources}
     ensemble_data = {source: {} for source in data_sources}
+    base_results = {source: {model: None for model in model_types} for source in data_sources}
 
     for source in data_sources:
         for model in model_types:
+            # Load base model results for horizontal line plotting
+            base_file_path = os.path.join(base_path, source, model, 'base_results', 'p0', 'base_results.csv')
+            if os.path.exists(base_file_path):
+                base_df = pd.read_csv(base_file_path)
+                if 'probabilities_tgt' in base_df.columns:
+                    base_df['probabilities_tgt'] = base_df['probabilities_tgt'].apply(safe_json_loads)
+                    base_df['tgt_he'] = base_df['probabilities_tgt'].apply(lambda x: x.get('he', 0.0001))
+                    base_df['tgt_she'] = base_df['probabilities_tgt'].apply(lambda x: x.get('she', 0.0001))
+                    total = base_df['tgt_he'] + base_df['tgt_she']
+                    base_df['normalized_she'] = base_df['tgt_she'] / total
+                    base_df['normalized_she'].fillna(0, inplace=True)
+                    base_results[source][model] = base_df['normalized_she'].mean()
+
             for decade in range(1900, 2011, 10):
                 decade_data = []
-                for run in range(1, 4):  # Assuming there are 3 runs as usual
-                    file_path = os.path.join(base_path, source, model, 'raw_results', 'p0', f"{decade}_results_run_{run}_p0.csv")
-                    if os.path.exists(file_path):
-                        df = pd.read_csv(file_path)
-                        if 'probabilities_tgt' in df.columns:
-                            df['probabilities_tgt'] = df['probabilities_tgt'].apply(safe_json_loads)
-                            df['tgt_he'] = df['probabilities_tgt'].apply(lambda x: x.get('he', 0.0001))
-                            df['tgt_she'] = df['probabilities_tgt'].apply(lambda x: x.get('she', 0.0001))
-                            total = df['tgt_he'] + df['tgt_she']
-                            df['normalized_she'] = df['tgt_she'] / total
-                            df['normalized_she'].fillna(0, inplace=True)
-                            decade_data.append(df['normalized_she'].mean())
+                file_path = os.path.join(base_path, source, model, 'raw_results', 'p0', f"{decade}_results_run_{1}_p0.csv")
+                if os.path.exists(file_path):
+                    df = pd.read_csv(file_path)
+                    if 'probabilities_tgt' in df.columns:
+                        df['probabilities_tgt'] = df['probabilities_tgt'].apply(safe_json_loads)
+                        df['tgt_he'] = df['probabilities_tgt'].apply(lambda x: x.get('he', 0.0001))
+                        df['tgt_she'] = df['probabilities_tgt'].apply(lambda x: x.get('she', 0.0001))
+                        total = df['tgt_he'] + df['tgt_she']
+                        df['normalized_she'] = df['tgt_she'] / total
+                        df['normalized_she'].fillna(0, inplace=True)
+                        decade_data.append(df['normalized_she'].mean())
                 normalized_data[source][model][decade] = sum(decade_data) / len(decade_data) if decade_data else 0
 
-        # Calculate ensemble average for each decade across all models for each data source
         for decade in range(1900, 2011, 10):
             ensemble_data[source][decade] = np.mean([normalized_data[source][model][decade] for model in model_types])
 
-    return normalized_data, ensemble_data
+    return normalized_data, ensemble_data, base_results
+
 
 
 def visualize_job_normalized_data_with_occupation(job_data, data_sources, model_types, occupation_data):
@@ -318,7 +330,7 @@ def plot_p0_trends_multiple(aggregated_data, data_sources, model_types):
 
 
 
-def plot_normalized_she_trends(normalized_data, ensemble_data, model_types, data_sources):
+def plot_normalized_she_trends(normalized_data, ensemble_data, base_results, model_types, data_sources):
     """Plot the average normalized_she values over decades for all model types and the ensemble for each data source."""
     colors = ['blue', 'green', 'red', 'magenta', 'cyan', 'orange']  # More colors for additional lines
     decades = np.array(range(1900, 2011, 10))
@@ -331,7 +343,11 @@ def plot_normalized_she_trends(normalized_data, ensemble_data, model_types, data
         for model in model_types:
             model_data = np.array([normalized_data[source][model].get(decade, np.nan) for decade in decades])
             model_data_lists[model] = model_data
-            plt.plot(decades, model_data, marker='o', label=f'{model}')
+            plt.plot(decades, model_data, marker='o', label=f'{model}', color=colors[model_types.index(model)])
+
+            # Plot the base model results as a horizontal line
+            if base_results[source][model] is not None:
+                plt.axhline(y=base_results[source][model], color=colors[model_types.index(model)], linestyle='--', label=f'{model} Base')
 
         # Calculate and display Canonical Correlation Analysis for all pairs
         correlations = []
@@ -633,12 +649,13 @@ def main():
         plot_cohens_d_trends(data_sources, model_types, base_path="results")
 
     if "Normalized She Trend" == selected_graphs:
-        normalized_data, ensemble_data = load_normalized_data(selected_model_types, selected_data_sources)
+        normalized_data, ensemble_data, base_results = load_normalized_data(selected_model_types, selected_data_sources)
         st.write("### Normalized She Trend")
-        plot_normalized_she_trends(normalized_data, ensemble_data, selected_model_types, selected_data_sources)
+        st.write(base_results)
+        plot_normalized_she_trends(normalized_data, ensemble_data, base_results, selected_model_types, selected_data_sources)
 
     if "Ensemble Comparison" == selected_graphs:
-        normalized_data, ensemble_data = load_normalized_data(selected_model_types, selected_data_sources)
+        normalized_data, ensemble_data, base_results = load_normalized_data(selected_model_types, selected_data_sources)
         st.write("### Ensemble Comparison")
         plot_ensemble_comparison(ensemble_data, selected_data_sources)
 
