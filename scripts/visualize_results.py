@@ -5,9 +5,8 @@ import matplotlib.pyplot as plt
 import json
 import numpy as np
 from itertools import combinations
-from sklearn.metrics import mean_squared_error
-from sklearn.cross_decomposition import CCA
-from scipy.stats import f_oneway, pearsonr
+from scipy.stats import f_oneway, pearsonr, spearmanr
+import statsmodels.api as sm
 
 def safe_json_loads(data):
     try:
@@ -327,45 +326,49 @@ def visualize_job_normalized_data(job_data, data_sources, model_types, data_fiel
     for data in job_data.values():
         unique_jobs.update(data['job'].dropna().unique())
 
-    # Ensure that both case_law and ny_times are in data_sources
-    if 'case_law' not in data_sources or 'ny_times' not in data_sources:
-        print("Both case_law and ny_times must be present in data_sources.")
-        return
-
     ensemble_averages = {source: {} for source in data_sources}
 
     for job in unique_jobs:
         job_fig, job_ax = plt.subplots(figsize=(12, 6))
-        data_by_source = []
 
-        for source in ['case_law', 'ny_times']:
+        for source in data_sources:
             ensemble_averages[source][job] = []
-            for decade in range(1900, 2011, 10):
+            decades = np.array(range(1900, 2011, 10))
+            for decade in decades:
                 decade_averages = []
                 for model in model_types:
                     model_data = job_data.get((source, model))
                     if model_data is not None:
                         job_decade_data = model_data[(model_data['job'] == job) & (model_data['decade'] == decade)][data_field]
-                        decade_averages.extend(job_decade_data.dropna().values)  # Ensure only non-NaN values are extended
+                        decade_averages.extend(job_decade_data.values)
+                
                 if decade_averages:
-                    ensemble_average = np.nanmean(decade_averages)
-                    ensemble_averages[source][job].append(ensemble_average)
+                    ensemble_averages[source][job].append(np.nanmean(decade_averages))
                 else:
                     ensemble_averages[source][job].append(np.nan)
-            data_by_source.append(ensemble_averages[source][job])
-            job_ax.plot(range(1900, 2011, 10), ensemble_averages[source][job], marker='o', label=f'Ensemble - {source}')
+            
+            # Plot ensemble data
+            ensemble_data = np.array(ensemble_averages[source][job])
+            valid_decades = decades[~np.isnan(ensemble_data)]
+            valid_data = ensemble_data[~np.isnan(ensemble_data)]
+            job_ax.plot(valid_decades, valid_data, marker='o', label=f'Ensemble - {source}')
+            
+            # Fit and plot linear trend line
+            if len(valid_data) > 1:
+                slope, intercept = np.polyfit(valid_decades, valid_data, 1)
+                trend_line = slope * valid_decades + intercept
+                job_ax.plot(valid_decades, trend_line, label=f'Trend Line - {source}', linestyle='--')
+        
+        case_law_data = np.array(ensemble_averages['case_law'][job])
+        ny_times_data = np.array(ensemble_averages['ny_times'][job])
+        valid_indices = ~np.isnan(case_law_data) & ~np.isnan(ny_times_data)
 
-        # Ensuring both sources have valid data for correlation
-        if all(data_by_source):
-            valid_indices = ~np.isnan(data_by_source[0]) & ~np.isnan(data_by_source[1])
-            if valid_indices.any():
-                # Perform Pearson and Spearman correlations on valid data only
-                pearson_corr, pearson_p_value = pearsonr(np.array(data_by_source[0])[valid_indices], np.array(data_by_source[1])[valid_indices])
-                spearman_corr, spearman_p_value = spearmanr(np.array(data_by_source[0])[valid_indices], np.array(data_by_source[1])[valid_indices])
-                correlation_text = (f'\nPearson Correlation: {pearson_corr:.2f} (p-value: {pearson_p_value:.3f}), '
-                                    f'Spearman Correlation: {spearman_corr:.2f} (p-value: {spearman_p_value:.3f})')
-            else:
-                correlation_text = '\nInsufficient data for correlation'
+        if valid_indices.any():
+            # Pearson and Spearman correlations and their p-values
+            pearson_corr, pearson_p_value = pearsonr(case_law_data[valid_indices], ny_times_data[valid_indices])
+            spearman_corr, spearman_p_value = spearmanr(case_law_data[valid_indices], ny_times_data[valid_indices])
+            correlation_text = (f'\nPearson Correlation: {pearson_corr:.2f} (p-value: {pearson_p_value:.3f}), '
+                                f'Spearman Correlation: {spearman_corr:.2f} (p-value: {spearman_p_value:.3f})')
         else:
             correlation_text = '\nInsufficient data for correlation'
 
@@ -375,7 +378,6 @@ def visualize_job_normalized_data(job_data, data_sources, model_types, data_fiel
         job_ax.legend()
         job_ax.grid(True)
         st.pyplot(job_fig)
-
 
 def load_aggregated_data(data_source, model_name, base_path="results"):
     """Load aggregated P0 data for each decade."""
@@ -446,10 +448,6 @@ def plot_p0_trends_multiple(aggregated_data, data_sources, model_types):
 
 
 
-import numpy as np
-import matplotlib.pyplot as plt
-from itertools import combinations
-from scipy.stats import pearsonr
 
 def plot_normalized_she_trends(normalized_data, ensemble_data, base_results, model_types, data_sources):
     """Plot the average normalized_she values over decades for all model types and the ensemble for each data source."""
@@ -715,13 +713,15 @@ def calculate_ensemble_correlations(job_data, data_sources, model_types, data_fi
     for data in job_data.values():
         unique_jobs.update(data['job'].dropna().unique())
 
+    results = []
+
     ensemble_averages = {source: {} for source in data_sources}
     correlation_results = []
+    decades = np.array(range(1900, 2011, 10))
 
     for job in unique_jobs:
         for source in data_sources:
             ensemble_averages[source][job] = []
-
             for decade in range(1900, 2011, 10):
                 decade_averages = []
                 for model in model_types:
@@ -735,39 +735,69 @@ def calculate_ensemble_correlations(job_data, data_sources, model_types, data_fi
                 else:
                     ensemble_averages[source][job].append(np.nan)
 
-        # Extract ensemble data for both sources for this job
+        # Extract ensemble data for both sources for this job and calculate trends
         case_law_data = np.array(ensemble_averages['case_law'][job])
         ny_times_data = np.array(ensemble_averages['ny_times'][job])
         valid_indices = ~np.isnan(case_law_data) & ~np.isnan(ny_times_data)
-
+        
         if valid_indices.any():
-            # Pearson correlation and its p-value
+            # Correlation calculations
             pearson_corr, pearson_p_value = pearsonr(case_law_data[valid_indices], ny_times_data[valid_indices])
-            # Spearman correlation and its p-value
             spearman_corr, spearman_p_value = spearmanr(case_law_data[valid_indices], ny_times_data[valid_indices])
         else:
             pearson_corr, pearson_p_value, spearman_corr, spearman_p_value = None, None, None, None
 
-        # Store results in a list for later conversion to DataFrame
+        # Calculate trend (slope) for each source
+        case_law_slope, _, _, _, _ = linregress(decades[~np.isnan(case_law_data)], case_law_data[~np.isnan(case_law_data)])
+        ny_times_slope, _, _, _, _ = linregress(decades[~np.isnan(ny_times_data)], ny_times_data[~np.isnan(ny_times_data)])
+
+        
+        average_ensemble = np.nanmean([case_law_data, ny_times_data], axis=0)
+        avg_valid_indices = ~np.isnan(average_ensemble)
+        avg_slope, _, _, _, _ = linregress(decades[avg_valid_indices], average_ensemble[avg_valid_indices])
+
+        # Prepare data for regression
+        valid_indices = ~np.isnan(average_ensemble)
+        if valid_indices.any():
+            X = sm.add_constant(decades[valid_indices])  # Adds a constant term to the predictor
+            y = np.array(average_ensemble)[valid_indices]
+
+            model = sm.OLS(y, X)
+            results_model = model.fit()
+
+            coeff, std_err = results_model.params[1], results_model.bse[1]
+            p_value = results_model.pvalues[1]
+
+            # Append results in a formatted way
+            results.append({
+                    'Job': job,
+                    'Source': source,
+                    'Coefficient': f'{coeff:.6f}',
+                    'Std. Error': f'({std_err:.6f})',
+                    'Significance': '†' if p_value < 0.01 else ''
+            })
+
+
+        # Store results including trend data
         correlation_results.append({
             'Job': job,
             'Pearson Correlation between Case Law and NY Times': pearson_corr,
             'Pearson P-value': pearson_p_value,
             'Spearman Correlation between Case Law and NY Times': spearman_corr,
-            'Spearman P-value': spearman_p_value
+            'Spearman P-value': spearman_p_value,
+            'Case Law Trend': case_law_slope,
+            'NY Times Trend': ny_times_slope,
+            'Average Ensemble Trend': avg_slope
         })
 
     # Convert list to DataFrame
     correlation_df = pd.DataFrame(correlation_results)
     correlation_df = correlation_df.dropna().sort_values('Pearson Correlation between Case Law and NY Times', ascending=False)
+    results_df = pd.DataFrame(results)
+    st.write(results_df)
 
     return correlation_df
 
-
-
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy.stats import pearsonr, spearmanr
 
 def plot_ensemble_comparison(ensemble_data, data_sources):
     plt.figure(figsize=(10, 5))
@@ -824,6 +854,64 @@ def plot_ensemble_comparison(ensemble_data, data_sources):
     plt.ylabel('Average Normalized She')
     plt.grid(True)
     plt.legend()
+    st.pyplot()
+
+
+def plot_ensemble_with_occupation(ensemble_data, occupation_data, data_sources):
+    plt.figure(figsize=(12, 6))
+    decades = np.array(range(1900, 2011, 10))
+
+    # Prepare to plot ensemble data and occupation data
+    all_ensemble_averages = []
+    occupation_averages = []
+    correlation_texts = []
+
+    # Calculate average occupation data over all jobs and decades
+    for decade in decades:
+        decade_data = occupation_data[occupation_data['Decade'] == decade]['Female']
+        if not decade_data.empty:
+            occupation_averages.append(decade_data.mean())
+        else:
+            occupation_averages.append(np.nan)
+
+    # Plot individual ensembles and calculate their averages
+    for source in data_sources:
+        ensemble_averages = [ensemble_data[source].get(decade, np.nan) for decade in decades]
+        #plt.plot(decades, ensemble_averages, marker='o', label=f'Ensemble - {source}')
+        all_ensemble_averages.append(ensemble_averages)
+        valid_indices = ~np.isnan(ensemble_averages) & ~np.isnan(occupation_averages)
+        if valid_indices.any():
+            pearson_corr, pearson_p_value = pearsonr(np.array(ensemble_averages)[valid_indices], np.array(occupation_averages)[valid_indices])
+            spearman_corr, spearman_p_value = spearmanr(np.array(ensemble_averages)[valid_indices], np.array(occupation_averages)[valid_indices])
+            correlation_texts.append(f'{source}: Pearson Correlation: {pearson_corr:.2f} (p={pearson_p_value:.3f}), Spearman Correlation: {spearman_corr:.2f} (p={spearman_p_value:.3f})')
+
+    # Calculate the average of the ensembles across all sources
+    clean_data = np.array(all_ensemble_averages, dtype=float).T
+    valid_indices = ~np.isnan(clean_data).any(axis=1)
+    if np.any(valid_indices):
+        avg_ensemble = np.nanmean(clean_data[valid_indices], axis=1)
+        plt.plot(decades[valid_indices], avg_ensemble, marker='o', linestyle='-', label='Average Ensemble')
+
+    # Plot average occupation data
+    valid_occupation_indices = ~np.isnan(occupation_averages)
+    plt.plot(decades[valid_occupation_indices], np.array(occupation_averages)[valid_occupation_indices], marker='s', linestyle='-', label='Average Occupation Data')
+
+    # Calculate Pearson and Spearman correlations between average ensemble and occupation data
+    valid_corr_indices = valid_indices & valid_occupation_indices
+    if valid_corr_indices.any():
+        pearson_corr, pearson_p_value = pearsonr(avg_ensemble[valid_corr_indices], np.array(occupation_averages)[valid_corr_indices])
+        spearman_corr, spearman_p_value = spearmanr(avg_ensemble[valid_corr_indices], np.array(occupation_averages)[valid_corr_indices])
+        correlation_texts.append(f'Pearson Correlation: {pearson_corr:.2f} (p-value: {pearson_p_value:.3f}), '
+                            f'Spearman Correlation: {spearman_corr:.2f} (p-value: {spearman_p_value:.3f})')
+        plt.title(f'Ensemble and Occupation Data Comparison\n'+ '\n'.join(correlation_texts))
+    else:
+        plt.title('Ensemble and Occupation Data Comparison\nInsufficient data for correlation')
+
+    plt.xlabel('Decade')
+    plt.ylabel('Normalized Probability')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
     st.pyplot()
 
 def compare_bias_scores(normalized_ensemble_data, log_ensemble_data, data_sources):
@@ -928,19 +1016,21 @@ def plot_P0_ensemble_comparison(ensemble_data, data_sources):
     st.dataframe(df_results)
     
 
+
+import seaborn as sns
+import pandas as pd
+import statsmodels.api as sm
+
 def plot_occupation_vs_model(job_data, occupation_data, model_types, data_sources):
-    # Check if occupation_data is a DataFrame or a path to a CSV, and load if necessary
-    if isinstance(occupation_data, str):
-        occupation_data = pd.read_csv(occupation_data)
+    # Specific jobs to annotate
+    selected_jobs = {'the nurse', 'the secretary', 'the teacher', 'the housekeeper'}
 
     # Collect unique jobs from occupation data
     unique_jobs = set(occupation_data['Occupation'])
     
-    # Prepare data for plotting
-    x_values = []  # Average ensemble values
-    y_values = []  # Average occupation ratios
-    job_labels = []  # Job names for labels
-    
+    # Prepare data for plotting in a DataFrame
+    data_list = []
+
     for job in unique_jobs:
         ensemble_averages = []
         occupation_values = []
@@ -966,37 +1056,86 @@ def plot_occupation_vs_model(job_data, occupation_data, model_types, data_source
             if not decade_occupation_data.empty:
                 occupation_values.append(decade_occupation_data.mean())
 
-        # Calculate the averages
+        # Calculate the averages and store in data_list
         if ensemble_averages and occupation_values:
             avg_ensemble = np.nanmean(ensemble_averages)
             avg_occupation_ratio = np.nanmean(occupation_values)
-            x_values.append(avg_occupation_ratio)
-            y_values.append(avg_ensemble)
-            job_labels.append(job)
+            data_list.append({
+                'Occupation Ratio': avg_occupation_ratio,
+                'Ensemble Result': avg_ensemble,
+                'Job': job
+            })
 
-    # Create the scatter plot
+    # Create DataFrame
+    data_df = pd.DataFrame(data_list)
+
+    # Fit regression model
+    X = sm.add_constant(data_df['Occupation Ratio'])  # adding a constant
+    model = sm.OLS(data_df['Ensemble Result'], X).fit()
+    predictions = model.predict(X)
+    r_squared = model.rsquared
+
+    # Create the scatter plot with regression line and confidence interval
     plt.figure(figsize=(10, 6))
-    plt.scatter(x_values, y_values, alpha=0.7)
+    sns.regplot(x='Occupation Ratio', y='Ensemble Result', data=data_df, scatter=True, ci=95, line_kws={'label':"R²={:.2f}".format(r_squared)})
+
+    # Annotate selected points
+    for i, row in data_df.iterrows():
+        if row['Job'].lower() in selected_jobs:
+            plt.annotate(row['Job'], (row['Occupation Ratio'], row['Ensemble Result']), textcoords="offset points", xytext=(0,10), ha='center')
+
     plt.xlabel('Average Occupation Ratio for All Decades')
     plt.ylabel('Average Ensemble Results for All Decades')
-    plt.title('Scatter Plot of Model Results vs Occupation Ratios')
-    plt.grid(True)
-    plt.xlim(0, 1)
-    plt.ylim(0, 1)
-
-    # Plot a diagonal line
-    plt.plot([0, 1], [0, 1], 'r--')
-
-    # Annotate points
-    for i, txt in enumerate(job_labels):
-        plt.annotate(txt, (x_values[i], y_values[i]), textcoords="offset points", xytext=(0,10), ha='center')
-
+    plt.title('Scatter Plot of Model Results vs Occupation Ratios with Confidence Interval')
     plt.legend()
-
-    
+    plt.grid(True)
     st.pyplot()
 
 
+def calculate_decade_correlations(job_data, model_types, data_sources, data_field):
+    decades = np.arange(1900, 2011, 10)
+    # Dictionary to store all values per decade across all sources and jobs
+    decade_values = {decade: [] for decade in decades}
+
+    # Collect data for each job and each source
+    for job in job_data.keys():
+        for source in data_sources:
+            for decade in decades:
+                all_decade_values = []
+
+                # Collect all values for this source and decade across all models
+                for model in model_types:
+                    model_data = job_data.get((source, model))
+                    if model_data is not None:
+                        job_decade_data = model_data[(model_data['decade'] == decade)][data_field]
+                        all_decade_values.extend(job_decade_data.dropna().values)
+
+                # Append all values to the corresponding decade
+                if all_decade_values:
+                    decade_values[decade].extend(all_decade_values)
+
+    # Convert lists to arrays for correlation calculation
+    for decade in decades:
+        decade_values[decade] = np.array(decade_values[decade])
+
+    # Prepare data for correlation matrix calculation
+    data = []
+    for decade in decades:
+        data.append(decade_values[decade])
+
+    # Only include decades with data for correlation calculation
+    data = [d for d in data if len(d) > 1]  # ensure each decade has at least two data points
+    df = pd.DataFrame(data).transpose()
+
+    # Calculate the correlation matrix
+    correlation_matrix = df.corr()
+
+    # Plot the correlation matrix
+    plt.figure(figsize=(10, 8))
+    sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt=".2f", xticklabels=[f"Decade {d}" for d in decades if len(decade_values[d]) > 1],
+                yticklabels=[f"Decade {d}" for d in decades if len(decade_values[d]) > 1])
+    plt.title('Decade-wise Pearson Correlation Matrix for Ensemble Values')
+    st.pyplot()
 
 
 def main():
@@ -1035,7 +1174,9 @@ def main():
             selected_ensemble = log_ensemble_data
 
         plot_ensemble_comparison(selected_ensemble, selected_data_sources)
-        compare_bias_scores(ensemble_data, log_ensemble_data, data_sources)
+        occupation_data = pd.read_csv('data/occupation_decade_percentages_gender.csv')
+        plot_ensemble_with_occupation(ensemble_data, occupation_data, data_sources)
+        compare_bias_scores(ensemble_data, ensemble_data, data_sources)
 
     if "Jobs She Trend" == selected_graphs:
         selected_data = st.sidebar.radio("Select Data to Use", ["normalized_she", "p0_she", "log_she"])
@@ -1047,21 +1188,6 @@ def main():
             data_field = 'log_prob_she'
         job_data = load_job_normalized_data(selected_data_sources, selected_model_types)
         visualize_job_normalized_data(job_data, selected_data_sources, selected_model_types, data_field)
-
-
-    if "Jobs vs Occupation Relative Percentage" == selected_graphs:
-        selected_data = st.sidebar.radio("Select Data to Use", ["normalized_she", "p0_she", "log_she"])
-        if selected_data == 'normalized_she':
-            data_field = 'normalized_she'
-        elif selected_data == 'p0_she':
-            data_field = 'P0_normalized_she'
-        elif selected_data == 'log_she':
-            data_field = 'log_prob_she'
-        job_data = load_job_normalized_data(selected_data_sources, selected_model_types)
-        occupation_data = pd.read_csv('data/occupation_decade_percentages_gender.csv')
-        st.dataframe(occupation_data)
-        visualize_job_normalized_data_with_occupation(job_data, selected_data_sources, selected_model_types, occupation_data, data_field)
-
 
     if "Calculate Occupation Correlations" == selected_graphs:
         selected_data = st.sidebar.radio("Select Data to Use", ["normalized_she", "p0_she", "log_she"])
@@ -1081,6 +1207,20 @@ def main():
         merged_correlations = pd.merge(df_occupation_correlations, df_ensemble_correlations, left_on="Job", right_on="Job")
         st.dataframe(merged_correlations)
 
+
+    if "Jobs vs Occupation Relative Percentage" == selected_graphs:
+        selected_data = st.sidebar.radio("Select Data to Use", ["normalized_she", "p0_she", "log_she"])
+        if selected_data == 'normalized_she':
+            data_field = 'normalized_she'
+        elif selected_data == 'p0_she':
+            data_field = 'P0_normalized_she'
+        elif selected_data == 'log_she':
+            data_field = 'log_prob_she'
+        job_data = load_job_normalized_data(selected_data_sources, selected_model_types)
+        occupation_data = pd.read_csv('data/occupation_decade_percentages_gender.csv')
+        st.dataframe(occupation_data)
+        visualize_job_normalized_data_with_occupation(job_data, selected_data_sources, selected_model_types, occupation_data, data_field)
+
     if "Occupation Statistic Tests" == selected_graphs:
         selected_data = st.sidebar.radio("Select Data to Use", ["normalized_she", "p0_she", "log_she"])
         if selected_data == 'normalized_she':
@@ -1095,8 +1235,16 @@ def main():
         st.dataframe(anova_results)
 
     if "Scatter Plots" == selected_graphs:
+        selected_data = st.sidebar.radio("Select Data to Use", ["normalized_she", "p0_she", "log_she"])
+        if selected_data == 'normalized_she':
+            data_field = 'normalized_she'
+        elif selected_data == 'p0_she':
+            data_field = 'P0_normalized_she'
+        elif selected_data == 'log_she':
+            data_field = 'log_prob_she'
         job_data = load_job_normalized_data(selected_data_sources, selected_model_types)
         occupation_data = pd.read_csv('data/occupation_decade_percentages_gender.csv')
+        calculate_decade_correlations(job_data, selected_model_types, selected_data_sources, data_field)
         plot_occupation_vs_model(job_data, occupation_data, selected_model_types, selected_data_sources)
         
 
