@@ -201,7 +201,7 @@ def visualize_job_normalized_data_with_occupation(job_data, data_sources, model_
 
         # Set secondary Y-axis for relative occupation percentages
         sec_ax = job_ax.twinx()
-        sns.lineplot(x=decades, y=all_occupation_values, marker='D', linestyle='-', color=palette[2], label='Relative Occupation Percentage', ax=sec_ax)
+        sns.lineplot(x=decades, y=all_occupation_values, marker='D', linestyle='-', color=palette[2], label='Occupation Percentage (%)', ax=sec_ax)
         
         # Fit and plot linear trend line for occupation data
         valid_indices_occupation = ~np.isnan(all_occupation_values)
@@ -219,8 +219,8 @@ def visualize_job_normalized_data_with_occupation(job_data, data_sources, model_
             job_ax.set_title(f'Normalized "She" Probabilities and Occupation Data for {job}\n{correlation_text}')
 
         job_ax.set_xlabel('Decade')
-        job_ax.set_ylabel('Normalized Probability of "She"')
-        sec_ax.set_ylabel('Relative Occupation Percentage (%)', color='magenta')
+        job_ax.set_ylabel('NPBS of "She"')
+        sec_ax.set_ylabel('Occupation Probability (%)', color='magenta')
         job_ax.legend(loc='upper left')
         sec_ax.legend(loc='upper right')
         job_ax.grid(True)
@@ -447,49 +447,8 @@ def plot_p0_trends_multiple(aggregated_data, data_sources, model_types):
 
 
 
-
-
 def plot_normalized_she_trends(normalized_data, ensemble_data, base_results, model_types, data_sources):
-    """Plot the average normalized_she values over decades for all model types and the ensemble for each data source."""
-    colors = ['blue', 'green', 'red', 'magenta', 'cyan', 'orange']  # More colors for additional lines
-    decades = np.array(range(1900, 2011, 10))
-
-    for source in data_sources:
-        plt.figure(figsize=(10, 5))
-        model_data_lists = {}
-
-        for model in model_types:
-            model_data = np.array([normalized_data[source][model].get(decade, np.nan) for decade in decades])
-            model_data_lists[model] = model_data
-            plt.plot(decades, model_data, marker='o', label=f'{model}', color=colors[model_types.index(model)])
-
-            # Plot the base model results as a horizontal line
-            if base_results[source][model] is not None:
-                plt.axhline(y=base_results[source][model], color=colors[model_types.index(model)], linestyle='--', label=f'{model} Base')
-
-        # Plot ensemble average
-        ensemble_averages = np.array([ensemble_data[source].get(decade, np.nan) for decade in decades])
-        plt.plot(decades[~np.isnan(ensemble_averages)], ensemble_averages[~np.isnan(ensemble_averages)], marker='o', linestyle='--', color='black', label='Ensemble')
-
-        # Calculate and display Pearson correlation for all pairs
-        correlations = []
-        for (model1, data1), (model2, data2) in combinations(model_data_lists.items(), 2):
-            valid_indices = ~np.isnan(data1) & ~np.isnan(data2)
-            if valid_indices.any():
-                correlation, p_value = pearsonr(data1[valid_indices], data2[valid_indices])
-                correlations.append(f'Correlation {model1}/{model2}: {correlation:.2f} (p={p_value:.4f})')
-
-        # Set plot title and display correlations
-        correlation_text = "\n".join(correlations)
-        plt.title(f'Normalized She Trend for {source}\n{correlation_text}')
-        plt.xlabel('Decade')
-        plt.ylabel('Average Normalized She')
-        plt.grid(True)
-        plt.legend()
-        st.pyplot()
-
-def plot_P0_normalized_she_trends(normalized_data, ensemble_data, base_results, model_types, data_sources):
-    """Plot the average normalized_she values over decades for all model types and the ensemble for each data source."""
+    """Plot the average NPBS over decades for all model types and the ensemble for each data source."""
     colors = ['blue', 'green', 'red', 'magenta', 'cyan', 'orange']  # More colors for additional lines
     decades = np.array(range(1900, 2011, 10))
 
@@ -522,15 +481,15 @@ def plot_P0_normalized_she_trends(normalized_data, ensemble_data, base_results, 
 
         # Set plot title and display correlations
         correlation_text = "\n".join(correlations)
-        plt.title(f'Normalized She Trend for {source}\n{correlation_text}')
+        st.write(correlation_text)
+        plt.title(f'NPBS She for {source}\n')
         plt.xlabel('Decade')
-        plt.ylabel('Average Normalized She')
+        plt.ylabel('She NPBS')
         plt.grid(True)
         plt.legend()
         st.pyplot()
 
-import matplotlib.pyplot as plt
-import numpy as np
+
 
 def plot_P0_base_model(base_results, model_types, data_sources):
     """Plot the base model P0 normalized she values for each model type for the first data source only, with annotated bars."""
@@ -558,7 +517,7 @@ def plot_P0_base_model(base_results, model_types, data_sources):
     
     plt.title(f'Base Model Normalized She Results in {source}')
     plt.xlabel('Model Type')
-    plt.ylabel('Average Normalized She')
+    plt.ylabel('She NPBS')
     plt.ylim(0, max(values) + 0.1)  # Set y-limit to make space for text
     plt.grid(True, linestyle='--', alpha=0.5)
     st.pyplot()
@@ -831,17 +790,7 @@ def plot_ensemble_comparison(ensemble_data, data_sources):
         # Calculate Spearman correlation and p-value for absolute values
         spearman_corr, spearman_p_value = spearmanr(data1, data2)
 
-        # Calculate Cross-Correlation at zero lag
-        cross_correlation = np.correlate(data1, data2)[0] / (len(data1) * data1.std() * data2.std())
-
-        # Calculate Pearson correlation and p-value for changes
-        if len(all_differences[0]) > 1 and len(all_differences[1]) > 1:  # Ensure there are enough points for changes
-            changes_correlation, changes_p_value = pearsonr(all_differences[0], all_differences[1])
-            changes_text = f', Changes Correlation: {changes_correlation:.2f}, Changes P-value: {changes_p_value:.3f}'
-        else:
-            changes_text = ', Insufficient data for Changes Correlation'
-        
-        plt.title(f'Ensemble Comparison Across Data Sources\nPearson Correlation: {correlation:.2f}, P-value: {p_value:.3f}\nSpearman Correlation: {spearman_corr:.2f}, Spearman P-value: {spearman_p_value:.3f}{changes_text}\nCross-Correlation (Zero lag): {cross_correlation:.2f}')
+        plt.title(f'Ensemble Comparison Across Data Sources\nPearson Correlation: {correlation:.2f}, P-value: {p_value:.3f}\nSpearman Correlation: {spearman_corr:.2f}, Spearman P-value: {spearman_p_value:.3f}')
     else:
         plt.title('Ensemble Comparison Across Data Sources\nNot enough data for correlation')
 
@@ -851,7 +800,7 @@ def plot_ensemble_comparison(ensemble_data, data_sources):
         plt.plot(decades[valid_indices], avg_ensemble, marker='o', linestyle='--', color='black', label='Average Ensemble')
 
     plt.xlabel('Decade')
-    plt.ylabel('Average Normalized She')
+    plt.ylabel('She NPBS')
     plt.grid(True)
     plt.legend()
     st.pyplot()
@@ -883,7 +832,8 @@ def plot_ensemble_with_occupation(ensemble_data, occupation_data, data_sources):
         if valid_indices.any():
             pearson_corr, pearson_p_value = pearsonr(np.array(ensemble_averages)[valid_indices], np.array(occupation_averages)[valid_indices])
             spearman_corr, spearman_p_value = spearmanr(np.array(ensemble_averages)[valid_indices], np.array(occupation_averages)[valid_indices])
-            correlation_texts.append(f'{source}: Pearson Correlation: {pearson_corr:.2f} (p={pearson_p_value:.3f}), Spearman Correlation: {spearman_corr:.2f} (p={spearman_p_value:.3f})')
+            correlation_texts.append(f'{source}: Pearson Correlation: {pearson_corr:.2f} (p={pearson_p_value:.3f}), Spearman Correlation: {spearman_corr:.2f} (p={spearman_p_value:.3f})'
+                                     )
 
     # Calculate the average of the ensembles across all sources
     clean_data = np.array(all_ensemble_averages, dtype=float).T
@@ -903,12 +853,12 @@ def plot_ensemble_with_occupation(ensemble_data, occupation_data, data_sources):
         spearman_corr, spearman_p_value = spearmanr(avg_ensemble[valid_corr_indices], np.array(occupation_averages)[valid_corr_indices])
         correlation_texts.append(f'Pearson Correlation: {pearson_corr:.2f} (p-value: {pearson_p_value:.3f}), '
                             f'Spearman Correlation: {spearman_corr:.2f} (p-value: {spearman_p_value:.3f})')
-        plt.title(f'Ensemble and Occupation Data Comparison\n'+ '\n'.join(correlation_texts))
+        plt.title(f'NPBS Ensemble and Occupation Data Comparison\n'+ '\n'.join(correlation_texts))
     else:
         plt.title('Ensemble and Occupation Data Comparison\nInsufficient data for correlation')
 
     plt.xlabel('Decade')
-    plt.ylabel('Normalized Probability')
+    plt.ylabel('She NPBS')
     plt.legend()
     plt.grid(True)
     plt.show()
@@ -932,7 +882,7 @@ def compare_bias_scores(normalized_ensemble_data, log_ensemble_data, data_source
     
     # Calculate and plot the average of normalized data across sources
     average_norm_data = np.nanmean([[normalized_ensemble_data[source].get(dec, np.nan) for dec in decades] for source in data_sources], axis=0)
-    ax1.plot(decades, average_norm_data, marker='o', linestyle='-', label='Average Normalized', color=color_norm)
+    ax1.plot(decades, average_norm_data, marker='o', linestyle='-', label='Average NPBS', color=color_norm)
 
     # Creating a second y-axis for log probability bias score
     ax2 = ax1.twinx()
@@ -941,7 +891,7 @@ def compare_bias_scores(normalized_ensemble_data, log_ensemble_data, data_source
 
     # Calculate and plot the average of log data across sources
     average_log_data = np.nanmean([[log_ensemble_data[source].get(dec, np.nan) for dec in decades] for source in data_sources], axis=0)
-    ax2.plot(decades, average_log_data, marker='x', linestyle='--', label='Average Log', color=color_log)
+    ax2.plot(decades, average_log_data, marker='x', linestyle='--', label='Average LPBS', color=color_log)
 
     # Check for valid indices to compute correlations
     valid_indices = ~np.isnan(average_norm_data) & ~np.isnan(average_log_data)
@@ -956,7 +906,7 @@ def compare_bias_scores(normalized_ensemble_data, log_ensemble_data, data_source
 
     # Set plot titles and legend
     fig.legend(loc='upper right', bbox_to_anchor=(1.1, 1.05))
-    plt.title('Comparison of Average Normalized and Log Probability Bias Scores Across Data Sources')
+    plt.title('Comparison of NPBS and LPBS Across Data Sources')
     plt.grid(True)
     st.pyplot()
 
@@ -967,8 +917,6 @@ def plot_P0_ensemble_comparison(ensemble_data, data_sources):
     ensemble_dict = {source: [] for source in data_sources}
     ensemble_dict['Average Ensemble'] = []
 
-    # Prepare to collect differences for correlation of changes
-    differences_dict = {source: [] for source in data_sources}
 
     # Plot individual ensembles
     for source in data_sources:
@@ -976,9 +924,6 @@ def plot_P0_ensemble_comparison(ensemble_data, data_sources):
         ensemble_dict[source] = ensemble_averages
         plt.plot(decades, ensemble_averages, marker='o', label=f'Ensemble - {source}')
         
-        # Calculate differences for changes correlation
-        if len(ensemble_averages) > 1:
-            differences_dict[source] = np.diff(ensemble_averages)
 
     # Compute and plot the average ensemble
     if len(data_sources) > 0:
@@ -994,18 +939,14 @@ def plot_P0_ensemble_comparison(ensemble_data, data_sources):
         valid_indices = ~np.isnan(data1) & ~np.isnan(data2)
         if valid_indices.any():
             correlation, p_value = pearsonr(data1[valid_indices], data2[valid_indices])
-            # Calculate changes correlation
-            changes_correlation, changes_p_value = pearsonr(
-                differences_dict[data_sources[0]], differences_dict[data_sources[1]]
-            ) if len(differences_dict[data_sources[0]]) > 0 and len(differences_dict[data_sources[1]]) > 0 else (None, None)
-            plt.title(f'Ensemble Comparison Across Data Sources\nCorrelation: {correlation:.2f}, P-value: {p_value:.3f}, Changes Correlation: {changes_correlation:.2f}, Changes P-value: {changes_p_value:.3f}')
+            plt.title(f'Ensemble Comparison Across Data Sources\nCorrelation: {correlation:.2f}, P-value: {p_value:.3f}')
         else:
             plt.title('Ensemble Comparison Across Data Sources\nNot enough data for correlation')
     else:
         plt.title('Ensemble Comparison Across Data Sources')
 
     plt.xlabel('Decade')
-    plt.ylabel('Average Normalized She')
+    plt.ylabel('She NPBS')
     plt.grid(True)
     plt.legend()
     st.pyplot()
@@ -1021,9 +962,78 @@ import seaborn as sns
 import pandas as pd
 import statsmodels.api as sm
 
+def plot_scatter(job_data, occupation_data, model_types, data_sources):
+    # Check if occupation_data is a DataFrame or a path to a CSV, and load if necessary
+    if isinstance(occupation_data, str):
+        occupation_data = pd.read_csv(occupation_data)
+
+    # Collect unique jobs from occupation data
+    unique_jobs = set(occupation_data['Occupation'])
+    
+    # Prepare data for plotting
+    x_values = []  # Average ensemble values
+    y_values = []  # Average occupation ratios
+    job_labels = []  # Job names for labels
+    
+    for job in unique_jobs:
+        ensemble_averages = []
+        occupation_values = []
+
+        # Calculate average ensemble values per decade
+        for decade in range(1900, 2011, 10):
+            decade_averages = []
+            for source in data_sources:
+                for model in model_types:
+                    model_data = job_data.get((source, model))
+                    if model_data is not None and job in model_data['job'].values:
+                        data_field = 'normalized_she'  # Adjust if using normalized_she
+                        job_decade_data = model_data[(model_data['job'] == job) & (model_data['decade'] == decade)][data_field]
+                        decade_averages.extend(job_decade_data.dropna().values)
+            if decade_averages:
+                average_decade_value = np.mean(decade_averages)
+                ensemble_averages.append(average_decade_value)
+
+        # Extract occupation data for the job
+        job_occupation_data = occupation_data[occupation_data['Occupation'] == job]
+        for decade in range(1900, 2011, 10):
+            decade_occupation_data = job_occupation_data[job_occupation_data['Decade'] == decade]['Female']
+            if not decade_occupation_data.empty:
+                occupation_values.append(decade_occupation_data.mean())
+
+        # Calculate the averages
+        if ensemble_averages and occupation_values:
+            avg_ensemble = np.nanmean(ensemble_averages)
+            avg_occupation_ratio = np.nanmean(occupation_values)
+            x_values.append(avg_occupation_ratio)
+            y_values.append(avg_ensemble)
+            job_labels.append(job)
+
+    # Create the scatter plot
+    plt.figure(figsize=(10, 6))
+    plt.scatter(x_values, y_values, alpha=0.7)
+    plt.xlabel('Average Occupation Ratio for All Decades')
+    plt.ylabel('Average Ensemble Results for All Decades')
+    plt.title('Scatter Plot of Model Results vs Occupation Ratios')
+    plt.grid(True)
+    plt.xlim(0, 1)
+    plt.ylim(0, 1)
+
+    # Plot a diagonal line
+    plt.plot([0, 1], [0, 1], 'r--')
+
+    # Annotate points
+    for i, txt in enumerate(job_labels):
+        plt.annotate(txt, (x_values[i], y_values[i]), textcoords="offset points", xytext=(0,10), ha='center')
+
+    plt.legend()
+
+    
+    st.pyplot()
+
+
 def plot_occupation_vs_model(job_data, occupation_data, model_types, data_sources):
     # Specific jobs to annotate
-    selected_jobs = {'the nurse', 'the secretary', 'the teacher', 'the housekeeper'}
+    selected_jobs = {'the nurse', 'the teacher', 'the housekeeper'}
 
     # Collect unique jobs from occupation data
     unique_jobs = set(occupation_data['Occupation'])
@@ -1042,7 +1052,7 @@ def plot_occupation_vs_model(job_data, occupation_data, model_types, data_source
                 for model in model_types:
                     model_data = job_data.get((source, model))
                     if model_data is not None and job in model_data['job'].values:
-                        data_field = 'P0_normalized_she'  # Adjust if using normalized_she
+                        data_field = 'normalized_she'  # Adjust if using normalized_she
                         job_decade_data = model_data[(model_data['job'] == job) & (model_data['decade'] == decade)][data_field]
                         decade_averages.extend(job_decade_data.dropna().values)
             if decade_averages:
@@ -1077,16 +1087,16 @@ def plot_occupation_vs_model(job_data, occupation_data, model_types, data_source
 
     # Create the scatter plot with regression line and confidence interval
     plt.figure(figsize=(10, 6))
-    sns.regplot(x='Occupation Ratio', y='Ensemble Result', data=data_df, scatter=True, ci=95, line_kws={'label':"R²={:.2f}".format(r_squared)})
+    sns.scatterplot(x='Occupation Ratio', y='Ensemble Result', data=data_df)
 
     # Annotate selected points
     for i, row in data_df.iterrows():
         if row['Job'].lower() in selected_jobs:
             plt.annotate(row['Job'], (row['Occupation Ratio'], row['Ensemble Result']), textcoords="offset points", xytext=(0,10), ha='center')
 
-    plt.xlabel('Average Occupation Ratio for All Decades')
-    plt.ylabel('Average Ensemble Results for All Decades')
-    plt.title('Scatter Plot of Model Results vs Occupation Ratios with Confidence Interval')
+    plt.xlabel('Average Woman Occupation Ratio for All Decades')
+    plt.ylabel('Average NPBS Ensemble Results for All Decades')
+    plt.title('Scatter Plot of Model Average NPBS Results vs Occupation Ratios')
     plt.legend()
     plt.grid(True)
     st.pyplot()
@@ -1138,6 +1148,59 @@ def calculate_decade_correlations(job_data, model_types, data_sources, data_fiel
     st.pyplot()
 
 
+from statsmodels.api import OLS, add_constant
+from statsmodels.regression.mixed_linear_model import MixedLM
+from linearmodels.panel import PanelOLS, PooledOLS
+import statsmodels.api as sm
+import statsmodels.formula.api as smf
+
+def prepare_panel_data(normalized_data, model_types, data_sources):
+    # Create a DataFrame to store panel data
+    panel_data = []
+    decades = range(1900, 2011, 10)
+    
+    for source in data_sources:
+        for model in model_types:
+            for decade in decades:
+                bias_score = normalized_data[source][model].get(decade, np.nan)
+                if not np.isnan(bias_score):
+                    panel_data.append({
+                        'Decade': decade,
+                        'Model': model,
+                        'BiasScore': bias_score,
+                        'DataSource': source
+                    })
+    
+    return pd.DataFrame(panel_data)
+
+def run_panel_analysis(panel_df):
+    # Convert categorical data to 'category' type for statistical modeling
+    panel_df['Model'] = panel_df['Model'].astype('category')
+    #panel_df['Decade'] = panel_df['Decade'].astype('category')
+    panel_df['DataSource'] = panel_df['DataSource'].astype('category')
+
+    # Define model: Fixed effects model with Decade as an explanatory variable
+    panel_df = panel_df.dropna(subset=['BiasScore'])
+    panel_df['Intercept'] = 1  # add constant for the intercept
+    model = MixedLM(panel_df['BiasScore'], panel_df[['Intercept', 'Decade']], groups=panel_df['Model'])
+    result = model.fit()
+    
+    st.write(result.summary())
+
+    panel_df['Decade'] = pd.to_numeric(panel_df['Decade'], errors='coerce')
+    panel_df['Model'] = panel_df['Model'].astype('category')
+    panel_df.set_index(['Model', 'Decade'], inplace=True)
+    #st.write(panel_df.columns)
+    model_df = panel_df
+    model_df.reset_index(inplace=True)
+
+    # Now create the model
+    fe_model = smf.mixedlm("BiasScore ~ 1 + Decade", data=model_df, groups=model_df['DataSource'])
+    fe_result = fe_model.fit()
+    st.write(fe_result.summary())
+
+
+
 def main():
     st.set_page_config(page_title="Data Visualizations", layout="wide")
     st.set_option('deprecation.showPyplotGlobalUse', False)
@@ -1145,22 +1208,38 @@ def main():
 
     data_sources = ['case_law', 'ny_times']  # List of all data sources
     model_types = ['bert-base-uncased', 'distilbert-base-uncased', 'albert-base-v2']
-    graph_options = ["Normalized She Trend","Ensemble Comparison", "Jobs She Trend", "Jobs vs Occupation Relative Percentage","Cohens d", "Calculate Occupation Correlations", "Occupation Statistic Tests", "Scatter Plots", "P0_she Ratio Trend"]
+    graph_options = ["NPBS She Trend","Ensemble Comparison", "Jobs She Trend", "Jobs vs Occupation Relative Percentage", "Calculate Occupation Correlations", "Occupation Statistic Tests", "Scatter Plots", "P0_she Ratio Trend"]
 
     selected_data_sources = st.sidebar.multiselect("Select Data Sources", data_sources, default=data_sources)
     selected_model_types = st.sidebar.multiselect("Select Model Types", model_types, default=model_types)
     selected_graphs = st.sidebar.radio("Select Graphs to Display", graph_options)
 
 
-    if "Normalized She Trend" == selected_graphs:
+    if "NPBS She Trend" == selected_graphs:
         normalized_data, P0_normalized_data, ensemble_data, P0_ensemble_data, base_results, base_P0_results, log_data, log_ensemble_data, base_log_results = load_normalized_data(selected_model_types, selected_data_sources)
-        st.write("### Normalized She Trend")
-        plot_normalized_she_trends(normalized_data, ensemble_data, base_results, selected_model_types, selected_data_sources)
-
-        plot_P0_normalized_she_trends(P0_normalized_data, ensemble_data, base_P0_results, model_types, data_sources)
-        st.write("### Normalized She Trend with Bars")
+        st.write("### NPBS She Trend")
+        selected_data = st.sidebar.radio("Select Data to Use", ["normalized_she", "p0_she", "log_she"])
+        if selected_data == 'normalized_she':
+            selected_ensemble = ensemble_data
+            selected_normalized_data = normalized_data
+            selected_base_results = base_results
+        elif selected_data == 'p0_she':
+            selected_ensemble = P0_ensemble_data
+            selected_normalized_data = P0_normalized_data
+            selected_base_results = base_P0_results
+        elif selected_data == 'log_she':
+            selected_ensemble = log_ensemble_data
+            selected_normalized_data = log_data
+            selected_base_results = base_log_results
+        
+        # Prepare and analyze data
+        panel_df = prepare_panel_data(selected_normalized_data, model_types, data_sources)
+        st.dataframe(panel_df)
+        run_panel_analysis(panel_df)
+        plot_normalized_she_trends(selected_normalized_data, selected_ensemble, selected_base_results, model_types, data_sources)
+        st.write("### NPBS She Trend with Bars")
         plot_P0_base_model(base_results, model_types, data_sources)
-        plot_P0_base_model(base_P0_results, model_types, data_sources)
+        #plot_P0_base_model(base_P0_results, model_types, data_sources)
 
     if "Ensemble Comparison" == selected_graphs:
         normalized_data, P0_normalized_data, ensemble_data, P0_ensemble_data, base_results, base_P0_results, log_data, log_ensemble_data, base_log_results = load_normalized_data(selected_model_types, selected_data_sources)
@@ -1175,8 +1254,8 @@ def main():
 
         plot_ensemble_comparison(selected_ensemble, selected_data_sources)
         occupation_data = pd.read_csv('data/occupation_decade_percentages_gender.csv')
-        plot_ensemble_with_occupation(ensemble_data, occupation_data, data_sources)
-        compare_bias_scores(ensemble_data, ensemble_data, data_sources)
+        plot_ensemble_with_occupation(selected_ensemble, occupation_data, data_sources)
+        compare_bias_scores(ensemble_data, log_ensemble_data, data_sources)
 
     if "Jobs She Trend" == selected_graphs:
         selected_data = st.sidebar.radio("Select Data to Use", ["normalized_she", "p0_she", "log_she"])
@@ -1244,17 +1323,14 @@ def main():
             data_field = 'log_prob_she'
         job_data = load_job_normalized_data(selected_data_sources, selected_model_types)
         occupation_data = pd.read_csv('data/occupation_decade_percentages_gender.csv')
-        calculate_decade_correlations(job_data, selected_model_types, selected_data_sources, data_field)
+        #calculate_decade_correlations(job_data, selected_model_types, selected_data_sources, data_field)
+        plot_scatter(job_data, occupation_data, selected_model_types, selected_data_sources)
         plot_occupation_vs_model(job_data, occupation_data, selected_model_types, selected_data_sources)
         
 
     if "P0_she Ratio Trend" == selected_graphs:
         calculate_log_probability_bias_score(selected_model_types, ['case_law'])
         calculate_log_probability_bias_score(selected_model_types, ['ny_times'])
-
-    if "Cohens d" == selected_graphs:
-        plot_cohens_d_trends(data_sources, model_types)
-
         
 
 
